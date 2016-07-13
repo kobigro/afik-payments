@@ -1,0 +1,13 @@
+{
+  "name": "afik-payments-frontend",
+  "version": "1.0.0",
+  "description": "A frontend for afik parent payments",
+  "dependencies": {
+    "selectize": "^0.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kobi Grossman"
+}
