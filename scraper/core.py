@@ -3,7 +3,7 @@ import json
 import asyncio
 from utils import get_viewstates
 from session import AfikSession
-from cities import CITY_TO_ID
+import cities
 import itertools
 
 # TODO: refactor to two modules - result pages scraper and schools scraper
@@ -173,7 +173,7 @@ def get_school_details(school_row):
 def get_school_search_params(school_details):
     # Convert from detail strings to cbo ids, from afik selects.
     name = school_details["name"]
-    city_id = CITY_TO_ID.get(school_details["city"], 0)
+    city_id = cities.get_city_id(school_details["city"])
     supervision_id = SUPERVISION_TO_ID.get(school_details["supervision"], 0)
     sector_id = SECTOR_TO_ID.get(school_details["sector"], 0)
     return {
