@@ -129,7 +129,7 @@ PAYMENTS_MAX_PRICES = {
                 'static': True,
                 'same_price_for_all': False,
                 'class_ranges_max_prices': {
-                    ('א', 'ד'): 885.0,
+                    ('א', 'ד'): 0.0,
                     ('ה', 'ו'): 1770.0,
                     ('ז', 'ט'): 2120.0,
                     ('י', 'יב'): 2300.0
