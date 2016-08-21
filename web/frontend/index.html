@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>A title</title>
+	<title>תשלומי הורים | נאמני תורה ועבודה</title>
 	<meta charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Heebo" rel="stylesheet">
 	<!--[if lt IE 9]><script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script><![endif]-->
@@ -13,10 +13,10 @@
 	<script src="node_modules/selectize/dist/js/standalone/selectize.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
+	<link rel="icon" href="favicon.png" type="image/png">
 	<link rel="stylesheet" href="node_modules/selectize/dist/css/selectize.default.css">
 	<style type="text/css">
-		body{
+		.centered{
 			text-align: center;
 		}
 		h1{
@@ -40,633 +40,669 @@
 			margin-top: 5px;
 		}
 		#submit{
-			margin-top: 10px;
+			margin-top: 5px;
 		}
 		#errorMessage{
 			display: none;
 			margin-top: 5px;
 		}
 		#payments{
-			margin-top: 20px;
+			margin-top: 30px;
+		}
+		#paymentsTable{
+			display: none;
 		}
 		.table > thead > tr > th.paymentsHeader{
 			vertical-align: middle;
 		}
+		#logo{
+			max-width:100px; 
+			float:right;
+			margin-right: 10px;
+			clear: both;
+		}
+		#logo > img{
+			max-width: 100%;
+			width: auto;
+			height: auto;
+			border: 0;
+		}
+		#explanationText{
+			display: none;
+			margin-top: 20px;
+			margin-right: 20px;
+		}
 	</style>
 </head>
 <body>
-	<h1 dir = "rtl">כמה בית הספר שלי גובה?</h1>
-	<form id = "schoolForm">
-		<div id = "cityFilter" class = "filter" >
-			<label for = "select-city">יישוב</label>
-			<select class = "filterSelect" name="select-city" id = "select-city" placeholder=" יישוב">
-				<option value = 'הכל' selected>הכל</option>
-				<option value = 'אבו ג'ווייעד (שבט)'>אבו ג'ווייעד (שבט)</option>
-				<option value = 'אבו גוש'>אבו גוש</option>
-				<option value = 'אבו סנאן'>אבו סנאן</option>
-				<option value = 'אבו קרינאת (יישוב)'>אבו קרינאת (יישוב)</option>
-				<option value = 'אבו תלול'>אבו תלול</option>
-				<option value = 'אבטין'>אבטין</option>
-				<option value = 'אביחיל'>אביחיל</option>
-				<option value = 'אביטל'>אביטל</option>
-				<option value = 'אבן יהודה'>אבן יהודה</option>
-				<option value = 'אבן שמואל'>אבן שמואל</option>
-				<option value = 'אבני חפץ'>אבני חפץ</option>
-				<option value = 'אבנת'>אבנת</option>
-				<option value = 'אום אל-פחם'>אום אל-פחם</option>
-				<option value = 'אום בטין'>אום בטין</option>
-				<option value = 'אופקים'>אופקים</option>
-				<option value = 'אור הגנוז'>אור הגנוז</option>
-				<option value = 'אור יהודה'>אור יהודה</option>
-				<option value = 'אור עקיבא'>אור עקיבא</option>
-				<option value = 'אורנית'>אורנית</option>
-				<option value = 'אזור'>אזור</option>
-				<option value = 'אחוזת ברק'>אחוזת ברק</option>
-				<option value = 'אחיעזר'>אחיעזר</option>
-				<option value = 'איילת השחר'>איילת השחר</option>
-				<option value = 'אילון'>אילון</option>
-				<option value = 'אילת'>אילת</option>
-				<option value = 'איתמר'>איתמר</option>
-				<option value = 'איתנים'>איתנים</option>
-				<option value = 'אכסאל'>אכסאל</option>
-				<option value = 'אל סייד'>אל סייד</option>
-				<option value = 'אלומה'>אלומה</option>
-				<option value = 'אלון מורה'>אלון מורה</option>
-				<option value = 'אלון שבות'>אלון שבות</option>
-				<option value = 'אלוני הבשן'>אלוני הבשן</option>
-				<option value = 'אלוני יצחק'>אלוני יצחק</option>
-				<option value = 'אלונים'>אלונים</option>
-				<option value = 'אלי-עד'>אלי-עד</option>
-				<option value = 'אליכין'>אליכין</option>
-				<option value = 'אליפלט'>אליפלט</option>
-				<option value = 'אליקים'>אליקים</option>
-				<option value = 'אלישיב'>אלישיב</option>
-				<option value = 'אלעד'>אלעד</option>
-				<option value = 'אלפי מנשה'>אלפי מנשה</option>
-				<option value = 'אלקנה'>אלקנה</option>
-				<option value = 'אמונים'>אמונים</option>
-				<option value = 'אמציה'>אמציה</option>
-				<option value = 'אספר'>אספר</option>
-				<option value = 'אעבלין'>אעבלין</option>
-				<option value = 'אעצם (שבט)'>אעצם (שבט)</option>
-				<option value = 'אפיקים'>אפיקים</option>
-				<option value = 'אפק'>אפק</option>
-				<option value = 'אפרתה'>אפרתה</option>
-				<option value = 'אריאל'>אריאל</option>
-				<option value = 'אשבל'>אשבל</option>
-				<option value = 'אשדוד'>אשדוד</option>
-				<option value = 'אשדות יעקב (איחוד)'>אשדות יעקב (איחוד)</option>
-				<option value = 'אשל הנשיא'>אשל הנשיא</option>
-				<option value = 'אשקלון'>אשקלון</option>
-				<option value = 'באקה אל-גרביה'>באקה אל-גרביה</option>
-				<option value = 'באר גנים'>באר גנים</option>
-				<option value = 'באר טוביה'>באר טוביה</option>
-				<option value = 'באר יעקב'>באר יעקב</option>
-				<option value = 'באר שבע'>באר שבע</option>
-				<option value = 'בארותיים'>בארותיים</option>
-				<option value = 'בוסתן הגליל'>בוסתן הגליל</option>
-				<option value = 'בועיינה-נוג'ידאת'>בועיינה-נוג'ידאת</option>
-				<option value = 'בוקעאתא'>בוקעאתא</option>
-				<option value = 'בחן'>בחן</option>
-				<option value = 'ביר אל-מכסור'>ביר אל-מכסור</option>
-				<option value = 'ביר הדאג''>ביר הדאג'</option>
-				<option value = 'בית אל'>בית אל</option>
-				<option value = 'בית אלעזרי'>בית אלעזרי</option>
-				<option value = 'בית אריה'>בית אריה</option>
-				<option value = 'בית ברל'>בית ברל</option>
-				<option value = 'בית ג'ן'>בית ג'ן</option>
-				<option value = 'בית דגן'>בית דגן</option>
-				<option value = 'בית הגדי'>בית הגדי</option>
-				<option value = 'בית העמק'>בית העמק</option>
-				<option value = 'בית חורון'>בית חורון</option>
-				<option value = 'בית חלקיה'>בית חלקיה</option>
-				<option value = 'בית חשמונאי'>בית חשמונאי</option>
-				<option value = 'בית יהושע'>בית יהושע</option>
-				<option value = 'בית יצחק-שער חפר'>בית יצחק-שער חפר</option>
-				<option value = 'בית מאיר'>בית מאיר</option>
-				<option value = 'בית ספר מרחבים'>בית ספר מרחבים</option>
-				<option value = 'בית עובד'>בית עובד</option>
-				<option value = 'בית צבי'>בית צבי</option>
-				<option value = 'בית קמה'>בית קמה</option>
-				<option value = 'בית רבן'>בית רבן</option>
-				<option value = 'בית שאן'>בית שאן</option>
-				<option value = 'בית שמש'>בית שמש</option>
-				<option value = 'ביתר עילית'>ביתר עילית</option>
-				<option value = 'בן שמן (כפר נוער)'>בן שמן (כפר נוער)</option>
-				<option value = 'בני ברק'>בני ברק</option>
-				<option value = 'בני דרור'>בני דרור</option>
-				<option value = 'בני יהודה'>בני יהודה</option>
-				<option value = 'בני נצרים'>בני נצרים</option>
-				<option value = 'בני עטרות'>בני עטרות</option>
-				<option value = 'בני עי"ש'>בני עי"ש</option>
-				<option value = 'בני ציון'>בני ציון</option>
-				<option value = 'בנימינה-גבעת עדה'>בנימינה-גבעת עדה</option>
-				<option value = 'בסמ"ה'>בסמ"ה</option>
-				<option value = 'בסמת טבעון'>בסמת טבעון</option>
-				<option value = 'בענה'>בענה</option>
-				<option value = 'בצת'>בצת</option>
-				<option value = 'ברכה'>ברכה</option>
-				<option value = 'ברכיה'>ברכיה</option>
-				<option value = 'ברקאי'>ברקאי</option>
-				<option value = 'ברקן'>ברקן</option>
-				<option value = 'בת חפר'>בת חפר</option>
-				<option value = 'בת ים'>בת ים</option>
-				<option value = 'בת עין'>בת עין</option>
-				<option value = 'ג'דיידה-מכר'>ג'דיידה-מכר</option>
-				<option value = 'ג'ולס'>ג'ולס</option>
-				<option value = 'ג'לג'וליה'>ג'לג'וליה</option>
-				<option value = 'ג'סר א-זרקא'>ג'סר א-זרקא</option>
-				<option value = 'ג'ש (גוש חלב)'>ג'ש (גוש חלב)</option>
-				<option value = 'ג'ת'>ג'ת</option>
-				<option value = 'גאולים'>גאולים</option>
-				<option value = 'גבים'>גבים</option>
-				<option value = 'גבע בנימין'>גבע בנימין</option>
-				<option value = 'גבעות בר'>גבעות בר</option>
-				<option value = 'גבעת אבני'>גבעת אבני</option>
-				<option value = 'גבעת אלה'>גבעת אלה</option>
-				<option value = 'גבעת ברנר'>גבעת ברנר</option>
-				<option value = 'גבעת זאב'>גבעת זאב</option>
-				<option value = 'גבעת חיים (איחוד)'>גבעת חיים (איחוד)</option>
-				<option value = 'גבעת חיים (מאוחד)'>גבעת חיים (מאוחד)</option>
-				<option value = 'גבעת יערים'>גבעת יערים</option>
-				<option value = 'גבעת שמואל'>גבעת שמואל</option>
-				<option value = 'גבעתיים'>גבעתיים</option>
-				<option value = 'גדרה'>גדרה</option>
-				<option value = 'גורנות הגליל'>גורנות הגליל</option>
-				<option value = 'גילון'>גילון</option>
-				<option value = 'גילת'>גילת</option>
-				<option value = 'גינוסר'>גינוסר</option>
-				<option value = 'גיניגר'>גיניגר</option>
-				<option value = 'גן יבנה'>גן יבנה</option>
-				<option value = 'גן נר'>גן נר</option>
-				<option value = 'גן שמואל'>גן שמואל</option>
-				<option value = 'גני תקווה'>גני תקווה</option>
-				<option value = 'געש'>געש</option>
-				<option value = 'גשר הזיו'>גשר הזיו</option>
-				<option value = 'גת (קיבוץ)'>גת (קיבוץ)</option>
-				<option value = 'דאלית אל-כרמל'>דאלית אל-כרמל</option>
-				<option value = 'דבורה'>דבורה</option>
-				<option value = 'דבוריה'>דבוריה</option>
-				<option value = 'דגניה א''>דגניה א'</option>
-				<option value = 'דולב'>דולב</option>
-				<option value = 'דייר אל-אסד'>דייר אל-אסד</option>
-				<option value = 'דייר חנא'>דייר חנא</option>
-				<option value = 'דימונה'>דימונה</option>
-				<option value = 'דישון'>דישון</option>
-				<option value = 'דפנה'>דפנה</option>
-				<option value = 'דריג'את'>דריג'את</option>
-				<option value = 'הוד השרון'>הוד השרון</option>
-				<option value = 'הודיות'>הודיות</option>
-				<option value = 'הושעיה'>הושעיה</option>
-				<option value = 'הזורע'>הזורע</option>
-				<option value = 'הזורעים'>הזורעים</option>
-				<option value = 'הר אדר'>הר אדר</option>
-				<option value = 'הרדוף'>הרדוף</option>
-				<option value = 'הרצליה'>הרצליה</option>
-				<option value = 'זיתן'>זיתן</option>
-				<option value = 'זכרון יעקב'>זכרון יעקב</option>
-				<option value = 'זמר'>זמר</option>
-				<option value = 'זמרת'>זמרת</option>
-				<option value = 'זרזיר'>זרזיר</option>
-				<option value = 'חגי'>חגי</option>
-				<option value = 'חדרה'>חדרה</option>
-				<option value = 'חולון'>חולון</option>
-				<option value = 'חוסן'>חוסן</option>
-				<option value = 'חורה'>חורה</option>
-				<option value = 'חורפיש'>חורפיש</option>
-				<option value = 'חיננית'>חיננית</option>
-				<option value = 'חיפה'>חיפה</option>
-				<option value = 'חירות'>חירות</option>
-				<option value = 'חלמיש'>חלמיש</option>
-				<option value = 'חמאם'>חמאם</option>
-				<option value = 'חמד'>חמד</option>
-				<option value = 'חמדיה'>חמדיה</option>
-				<option value = 'חמרה'>חמרה</option>
-				<option value = 'חספין'>חספין</option>
-				<option value = 'חפץ חיים'>חפץ חיים</option>
-				<option value = 'חצור הגלילית'>חצור הגלילית</option>
-				<option value = 'חצרים'>חצרים</option>
-				<option value = 'חרב לאת'>חרב לאת</option>
-				<option value = 'חריש'>חריש</option>
-				<option value = 'חשמונאים'>חשמונאים</option>
-				<option value = 'טבריה'>טבריה</option>
-				<option value = 'טובא-זנגריה'>טובא-זנגריה</option>
-				<option value = 'טורעאן'>טורעאן</option>
-				<option value = 'טייבה'>טייבה</option>
-				<option value = 'טייבה (בעמק)'>טייבה (בעמק)</option>
-				<option value = 'טירה'>טירה</option>
-				<option value = 'טירת כרמל'>טירת כרמל</option>
-				<option value = 'טירת צבי'>טירת צבי</option>
-				<option value = 'טל שחר'>טל שחר</option>
-				<option value = 'טלמון'>טלמון</option>
-				<option value = 'טמרה'>טמרה</option>
-				<option value = 'טמרה (יזרעאל)'>טמרה (יזרעאל)</option>
-				<option value = 'יאנוח-ג'ת'>יאנוח-ג'ת</option>
-				<option value = 'יבול'>יבול</option>
-				<option value = 'יבנאל'>יבנאל</option>
-				<option value = 'יבנה'>יבנה</option>
-				<option value = 'יגור'>יגור</option>
-				<option value = 'יד בנימין'>יד בנימין</option>
-				<option value = 'יד מרדכי'>יד מרדכי</option>
-				<option value = 'יד רמב"ם'>יד רמב"ם</option>
-				<option value = 'יהוד-מונוסון'>יהוד-מונוסון</option>
-				<option value = 'יטבתה'>יטבתה</option>
-				<option value = 'יסוד המעלה'>יסוד המעלה</option>
-				<option value = 'יסודות'>יסודות</option>
-				<option value = 'יפיע'>יפיע</option>
-				<option value = 'יפעת'>יפעת</option>
-				<option value = 'יצהר'>יצהר</option>
-				<option value = 'יקיר'>יקיר</option>
-				<option value = 'יקנעם עילית'>יקנעם עילית</option>
-				<option value = 'יראון'>יראון</option>
-				<option value = 'ירוחם'>ירוחם</option>
-				<option value = 'ירושלים'>ירושלים</option>
-				<option value = 'ירכא'>ירכא</option>
-				<option value = 'כאבול'>כאבול</option>
-				<option value = 'כאוכב אבו אל-היג'א'>כאוכב אבו אל-היג'א</option>
-				<option value = 'כברי'>כברי</option>
-				<option value = 'כדורי'>כדורי</option>
-				<option value = 'כוכב השחר'>כוכב השחר</option>
-				<option value = 'כוכב יאיר'>כוכב יאיר</option>
-				<option value = 'כוכב יעקב'>כוכב יעקב</option>
-				<option value = 'כחלה'>כחלה</option>
-				<option value = 'כישור'>כישור</option>
-				<option value = 'כמאנה'>כמאנה</option>
-				<option value = 'כנות'>כנות</option>
-				<option value = 'כנרת (קבוצה)'>כנרת (קבוצה)</option>
-				<option value = 'כסיפה'>כסיפה</option>
-				<option value = 'כסרא-סמיע'>כסרא-סמיע</option>
-				<option value = 'כעביה-טבאש-חג'אג'רה'>כעביה-טבאש-חג'אג'רה</option>
-				<option value = 'כפר אדומים'>כפר אדומים</option>
-				<option value = 'כפר ביאליק'>כפר ביאליק</option>
-				<option value = 'כפר בלום'>כפר בלום</option>
-				<option value = 'כפר ברא'>כפר ברא</option>
-				<option value = 'כפר גדעון'>כפר גדעון</option>
-				<option value = 'כפר גלים'>כפר גלים</option>
-				<option value = 'כפר גלעדי'>כפר גלעדי</option>
-				<option value = 'כפר האורנים'>כפר האורנים</option>
-				<option value = 'כפר המכבי'>כפר המכבי</option>
-				<option value = 'כפר הנוער הדתי'>כפר הנוער הדתי</option>
-				<option value = 'כפר הרא"ה'>כפר הרא"ה</option>
-				<option value = 'כפר ויתקין'>כפר ויתקין</option>
-				<option value = 'כפר ורדים'>כפר ורדים</option>
-				<option value = 'כפר זוהרים'>כפר זוהרים</option>
-				<option value = 'כפר חב"ד'>כפר חב"ד</option>
-				<option value = 'כפר חסידים א''>כפר חסידים א'</option>
-				<option value = 'כפר יאסיף'>כפר יאסיף</option>
-				<option value = 'כפר יהושע'>כפר יהושע</option>
-				<option value = 'כפר יונה'>כפר יונה</option>
-				<option value = 'כפר יעבץ'>כפר יעבץ</option>
-				<option value = 'כפר כמא'>כפר כמא</option>
-				<option value = 'כפר כנא'>כפר כנא</option>
-				<option value = 'כפר מימון'>כפר מימון</option>
-				<option value = 'כפר מל"ל'>כפר מל"ל</option>
-				<option value = 'כפר מנדא'>כפר מנדא</option>
-				<option value = 'כפר מנחם'>כפר מנחם</option>
-				<option value = 'כפר מצר'>כפר מצר</option>
-				<option value = 'כפר סבא'>כפר סבא</option>
-				<option value = 'כפר סילבר'>כפר סילבר</option>
-				<option value = 'כפר סירקין'>כפר סירקין</option>
-				<option value = 'כפר עציון'>כפר עציון</option>
-				<option value = 'כפר פינס'>כפר פינס</option>
-				<option value = 'כפר קאסם'>כפר קאסם</option>
-				<option value = 'כפר קרע'>כפר קרע</option>
-				<option value = 'כפר שמריהו'>כפר שמריהו</option>
-				<option value = 'כפר תבור'>כפר תבור</option>
-				<option value = 'כפר תפוח'>כפר תפוח</option>
-				<option value = 'כרם מהר"ל'>כרם מהר"ל</option>
-				<option value = 'כרמיאל'>כרמיאל</option>
-				<option value = 'לביא'>לביא</option>
-				<option value = 'להבות חביבה'>להבות חביבה</option>
-				<option value = 'להבים'>להבים</option>
-				<option value = 'לוד'>לוד</option>
-				<option value = 'לכיש'>לכיש</option>
-				<option value = 'לפיד'>לפיד</option>
-				<option value = 'לקיה'>לקיה</option>
-				<option value = 'מאיר שפיה'>מאיר שפיה</option>
-				<option value = 'מבוא חורון'>מבוא חורון</option>
-				<option value = 'מבועים'>מבועים</option>
-				<option value = 'מבשרת ציון'>מבשרת ציון</option>
-				<option value = 'מג'ד אל-כרום'>מג'ד אל-כרום</option>
-				<option value = 'מג'דל שמס'>מג'דל שמס</option>
-				<option value = 'מגאר'>מגאר</option>
-				<option value = 'מגדל העמק'>מגדל העמק</option>
-				<option value = 'מגן'>מגן</option>
-				<option value = 'מדרשת בן גוריון'>מדרשת בן גוריון</option>
-				<option value = 'מדרשת רופין'>מדרשת רופין</option>
-				<option value = 'מודיעין עילית'>מודיעין עילית</option>
-				<option value = 'מודיעין-מכבים-רעות'>מודיעין-מכבים-רעות</option>
-				<option value = 'מולדה'>מולדה</option>
-				<option value = 'מוקייבלה'>מוקייבלה</option>
-				<option value = 'מורשת'>מורשת</option>
-				<option value = 'מזכרת בתיה'>מזכרת בתיה</option>
-				<option value = 'מזרע'>מזרע</option>
-				<option value = 'מזרעה'>מזרעה</option>
-				<option value = 'מחנה תל נוף'>מחנה תל נוף</option>
-				<option value = 'מחסיה'>מחסיה</option>
-				<option value = 'מטולה'>מטולה</option>
-				<option value = 'מייסר'>מייסר</option>
-				<option value = 'מירון'>מירון</option>
-				<option value = 'מיתר'>מיתר</option>
-				<option value = 'מכמורת'>מכמורת</option>
-				<option value = 'מלכישוע'>מלכישוע</option>
-				<option value = 'מנשית זבדה'>מנשית זבדה</option>
-				<option value = 'מסילות'>מסילות</option>
-				<option value = 'מסלול'>מסלול</option>
-				<option value = 'מסעדה'>מסעדה</option>
-				<option value = 'מעגלים'>מעגלים</option>
-				<option value = 'מעגן מיכאל'>מעגן מיכאל</option>
-				<option value = 'מעונה'>מעונה</option>
-				<option value = 'מעיליא'>מעיליא</option>
-				<option value = 'מעלה אדומים'>מעלה אדומים</option>
-				<option value = 'מעלה אפרים'>מעלה אפרים</option>
-				<option value = 'מעלה החמישה'>מעלה החמישה</option>
-				<option value = 'מעלה לבונה'>מעלה לבונה</option>
-				<option value = 'מעלה מכמש'>מעלה מכמש</option>
-				<option value = 'מעלה עירון'>מעלה עירון</option>
-				<option value = 'מעלה עמוס'>מעלה עמוס</option>
-				<option value = 'מעלות-תרשיחא'>מעלות-תרשיחא</option>
-				<option value = 'מצפה יריחו'>מצפה יריחו</option>
-				<option value = 'מצפה רמון'>מצפה רמון</option>
-				<option value = 'מקווה ישראל'>מקווה ישראל</option>
-				<option value = 'מרגליות'>מרגליות</option>
-				<option value = 'מרום גולן'>מרום גולן</option>
-				<option value = 'מרחביה (קיבוץ)'>מרחביה (קיבוץ)</option>
-				<option value = 'מרכז אזור מרום הגליל'>מרכז אזור מרום הגליל</option>
-				<option value = 'מרכז שוהם'>מרכז שוהם</option>
-				<option value = 'מרכז שפירא'>מרכז שפירא</option>
-				<option value = 'משאבי שדה'>משאבי שדה</option>
-				<option value = 'משהד'>משהד</option>
-				<option value = 'משואה'>משואה</option>
-				<option value = 'משמר השרון'>משמר השרון</option>
-				<option value = 'מתן'>מתן</option>
-				<option value = 'מתתיהו'>מתתיהו</option>
-				<option value = 'נאות מרדכי'>נאות מרדכי</option>
-				<option value = 'נאות סמדר'>נאות סמדר</option>
-				<option value = 'נאעורה'>נאעורה</option>
-				<option value = 'נהורה'>נהורה</option>
-				<option value = 'נהלל'>נהלל</option>
-				<option value = 'נהריה'>נהריה</option>
-				<option value = 'נוב'>נוב</option>
-				<option value = 'נוה'>נוה</option>
-				<option value = 'נווה איתן'>נווה איתן</option>
-				<option value = 'נווה זוהר'>נווה זוהר</option>
-				<option value = 'נווה ירק'>נווה ירק</option>
-				<option value = 'נווה שלום'>נווה שלום</option>
-				<option value = 'נוף איילון'>נוף איילון</option>
-				<option value = 'נופית'>נופית</option>
-				<option value = 'נוקדים'>נוקדים</option>
-				<option value = 'נחושה'>נחושה</option>
-				<option value = 'נחלים'>נחלים</option>
-				<option value = 'נחם'>נחם</option>
-				<option value = 'נחף'>נחף</option>
-				<option value = 'נטור'>נטור</option>
-				<option value = 'ניין'>ניין</option>
-				<option value = 'ניל"י'>ניל"י</option>
-				<option value = 'ניצן'>ניצן</option>
-				<option value = 'ניצנה (קהילת חינוך)'>ניצנה (קהילת חינוך)</option>
-				<option value = 'ניצנים'>ניצנים</option>
-				<option value = 'ניר יפה'>ניר יפה</option>
-				<option value = 'ניר עם'>ניר עם</option>
-				<option value = 'ניר עציון'>ניר עציון</option>
-				<option value = 'ניר עקיבא'>ניר עקיבא</option>
-				<option value = 'ניר צבי'>ניר צבי</option>
-				<option value = 'נס ציונה'>נס ציונה</option>
-				<option value = 'נעורים'>נעורים</option>
-				<option value = 'נעלה'>נעלה</option>
-				<option value = 'נעמן (מילואות)'>נעמן (מילואות)</option>
-				<option value = 'נען'>נען</option>
-				<option value = 'נצרת'>נצרת</option>
-				<option value = 'נצרת עילית'>נצרת עילית</option>
-				<option value = 'נשר'>נשר</option>
-				<option value = 'נתיבות'>נתיבות</option>
-				<option value = 'נתניה'>נתניה</option>
-				<option value = 'סאג'ור'>סאג'ור</option>
-				<option value = 'סאסא'>סאסא</option>
-				<option value = 'סביון'>סביון</option>
-				<option value = 'סולם'>סולם</option>
-				<option value = 'סוסיה'>סוסיה</option>
-				<option value = 'סח'נין'>סח'נין</option>
-				<option value = 'סלמה'>סלמה</option>
-				<option value = 'סנסנה'>סנסנה</option>
-				<option value = 'סעד'>סעד</option>
-				<option value = 'ספיר'>ספיר</option>
-				<option value = 'סתריה'>סתריה</option>
-				<option value = 'ע'ג'ר'>ע'ג'ר</option>
-				<option value = 'עברון'>עברון</option>
-				<option value = 'עוזייר'>עוזייר</option>
-				<option value = 'עומר'>עומר</option>
-				<option value = 'עופרה'>עופרה</option>
-				<option value = 'עוקבי (בנו עוקבה)'>עוקבי (בנו עוקבה)</option>
-				<option value = 'עטרת'>עטרת</option>
-				<option value = 'עיילבון'>עיילבון</option>
-				<option value = 'עיינות'>עיינות</option>
-				<option value = 'עילוט'>עילוט</option>
-				<option value = 'עין אל-אסד'>עין אל-אסד</option>
-				<option value = 'עין גדי'>עין גדי</option>
-				<option value = 'עין החורש'>עין החורש</option>
-				<option value = 'עין המפרץ'>עין המפרץ</option>
-				<option value = 'עין השופט'>עין השופט</option>
-				<option value = 'עין חרוד (איחוד)'>עין חרוד (איחוד)</option>
-				<option value = 'עין חרוד (מאוחד)'>עין חרוד (מאוחד)</option>
-				<option value = 'עין כרם-בי"ס חקלאי'>עין כרם-בי"ס חקלאי</option>
-				<option value = 'עין כרמל'>עין כרמל</option>
-				<option value = 'עין מאהל'>עין מאהל</option>
-				<option value = 'עין נקובא'>עין נקובא</option>
-				<option value = 'עין קנייא'>עין קנייא</option>
-				<option value = 'עין ראפה'>עין ראפה</option>
-				<option value = 'עין שמר'>עין שמר</option>
-				<option value = 'עינת'>עינת</option>
-				<option value = 'עכו'>עכו</option>
-				<option value = 'עלי'>עלי</option>
-				<option value = 'עלי זהב'>עלי זהב</option>
-				<option value = 'עמיקם'>עמיקם</option>
-				<option value = 'עמיר'>עמיר</option>
-				<option value = 'עמנואל'>עמנואל</option>
-				<option value = 'עספיא'>עספיא</option>
-				<option value = 'עפולה'>עפולה</option>
-				<option value = 'עצמון שגב'>עצמון שגב</option>
-				<option value = 'עראבה'>עראבה</option>
-				<option value = 'עראמשה'>עראמשה</option>
-				<option value = 'ערד'>ערד</option>
-				<option value = 'ערערה'>ערערה</option>
-				<option value = 'ערערה-בנגב'>ערערה-בנגב</option>
-				<option value = 'עשרת'>עשרת</option>
-				<option value = 'עתלית'>עתלית</option>
-				<option value = 'עתניאל'>עתניאל</option>
-				<option value = 'פדואל'>פדואל</option>
-				<option value = 'פוריידיס'>פוריידיס</option>
-				<option value = 'פני חבר'>פני חבר</option>
-				<option value = 'פסגות'>פסגות</option>
-				<option value = 'פסוטה'>פסוטה</option>
-				<option value = 'פקיעין (בוקייעה)'>פקיעין (בוקייעה)</option>
-				<option value = 'פרדס חנה-כרכור'>פרדס חנה-כרכור</option>
-				<option value = 'פרדסיה'>פרדסיה</option>
-				<option value = 'פרוד'>פרוד</option>
-				<option value = 'פתח תקווה'>פתח תקווה</option>
-				<option value = 'צביה'>צביה</option>
-				<option value = 'צוחר'>צוחר</option>
-				<option value = 'צור הדסה'>צור הדסה</option>
-				<option value = 'צור יצחק'>צור יצחק</option>
-				<option value = 'צור משה'>צור משה</option>
-				<option value = 'צלפון'>צלפון</option>
-				<option value = 'צנדלה'>צנדלה</option>
-				<option value = 'צפריה'>צפריה</option>
-				<option value = 'צפת'>צפת</option>
-				<option value = 'צרעה'>צרעה</option>
-				<option value = 'קבוצת יבנה'>קבוצת יבנה</option>
-				<option value = 'קדומים'>קדומים</option>
-				<option value = 'קדימה-צורן'>קדימה-צורן</option>
-				<option value = 'קדמה'>קדמה</option>
-				<option value = 'קדרון'>קדרון</option>
-				<option value = 'קודייראת א-צאנע(שבט)'>קודייראת א-צאנע(שבט)</option>
-				<option value = 'קוממיות'>קוממיות</option>
-				<option value = 'קיסריה'>קיסריה</option>
-				<option value = 'קליה'>קליה</option>
-				<option value = 'קלנסווה'>קלנסווה</option>
-				<option value = 'קציר'>קציר</option>
-				<option value = 'קצר א-סר'>קצר א-סר</option>
-				<option value = 'קצרין'>קצרין</option>
-				<option value = 'קרית אונו'>קרית אונו</option>
-				<option value = 'קרית ארבע'>קרית ארבע</option>
-				<option value = 'קרית אתא'>קרית אתא</option>
-				<option value = 'קרית ביאליק'>קרית ביאליק</option>
-				<option value = 'קרית גת'>קרית גת</option>
-				<option value = 'קרית טבעון'>קרית טבעון</option>
-				<option value = 'קרית ים'>קרית ים</option>
-				<option value = 'קרית יערים'>קרית יערים</option>
-				<option value = 'קרית יערים(מוסד)'>קרית יערים(מוסד)</option>
-				<option value = 'קרית מוצקין'>קרית מוצקין</option>
-				<option value = 'קרית מלאכי'>קרית מלאכי</option>
-				<option value = 'קרית עקרון'>קרית עקרון</option>
-				<option value = 'קרית שמונה'>קרית שמונה</option>
-				<option value = 'קרני שומרון'>קרני שומרון</option>
-				<option value = 'קשת'>קשת</option>
-				<option value = 'ראמה'>ראמה</option>
-				<option value = 'ראס עלי'>ראס עלי</option>
-				<option value = 'ראש העין'>ראש העין</option>
-				<option value = 'ראש פינה'>ראש פינה</option>
-				<option value = 'ראש צורים'>ראש צורים</option>
-				<option value = 'ראשון לציון'>ראשון לציון</option>
-				<option value = 'רבבה'>רבבה</option>
-				<option value = 'רגבה'>רגבה</option>
-				<option value = 'רהט'>רהט</option>
-				<option value = 'רומאנה'>רומאנה</option>
-				<option value = 'רומת הייב'>רומת הייב</option>
-				<option value = 'רחוב'>רחוב</option>
-				<option value = 'רחובות'>רחובות</option>
-				<option value = 'ריחאניה'>ריחאניה</option>
-				<option value = 'ריינה'>ריינה</option>
-				<option value = 'רכסים'>רכסים</option>
-				<option value = 'רמות'>רמות</option>
-				<option value = 'רמות השבים'>רמות השבים</option>
-				<option value = 'רמלה'>רמלה</option>
-				<option value = 'רמת גן'>רמת גן</option>
-				<option value = 'רמת דוד'>רמת דוד</option>
-				<option value = 'רמת הכובש'>רמת הכובש</option>
-				<option value = 'רמת השרון'>רמת השרון</option>
-				<option value = 'רמת ישי'>רמת ישי</option>
-				<option value = 'רמת מגשימים'>רמת מגשימים</option>
-				<option value = 'רעננה'>רעננה</option>
-				<option value = 'שבי שומרון'>שבי שומרון</option>
-				<option value = 'שבלי - אום אל-גנם'>שבלי - אום אל-גנם</option>
-				<option value = 'שגב-שלום'>שגב-שלום</option>
-				<option value = 'שדה אליהו'>שדה אליהו</option>
-				<option value = 'שדה יעקב'>שדה יעקב</option>
-				<option value = 'שדרות'>שדרות</option>
-				<option value = 'שובל'>שובל</option>
-				<option value = 'שוהם'>שוהם</option>
-				<option value = 'שומריה'>שומריה</option>
-				<option value = 'שייח' דנון'>שייח' דנון</option>
-				<option value = 'שילה'>שילה</option>
-				<option value = 'שילת'>שילת</option>
-				<option value = 'שכניה'>שכניה</option>
-				<option value = 'שלומי'>שלומי</option>
-				<option value = 'שמשית'>שמשית</option>
-				<option value = 'שעב'>שעב</option>
-				<option value = 'שעלבים'>שעלבים</option>
-				<option value = 'שערי תקווה'>שערי תקווה</option>
-				<option value = 'שפיים'>שפיים</option>
-				<option value = 'שפיר'>שפיר</option>
-				<option value = 'שפרעם'>שפרעם</option>
-				<option value = 'שקד'>שקד</option>
-				<option value = 'שריגים (לי-און)'>שריגים (לי-און)</option>
-				<option value = 'שריד'>שריד</option>
-				<option value = 'תירוש'>תירוש</option>
-				<option value = 'תל אביב - יפו'>תל אביב - יפו</option>
-				<option value = 'תל יצחק'>תל יצחק</option>
-				<option value = 'תל מונד'>תל מונד</option>
-				<option value = 'תל שבע'>תל שבע</option>
-				<option value = 'תלמים'>תלמים</option>
-				<option value = 'תנובות'>תנובות</option>
-				<option value = 'תפרח'>תפרח</option>
-				<option value = 'תקוע'>תקוע</option>
-				<option value = 'תראבין א-צאנע(ישוב)'>תראבין א-צאנע(ישוב)</option>
-			</select>
-		</div>
+	<div class = "centered">
+		<a href = "http://toravoda.org.il/" id = "logo">
+			<img src="logo.jpg" />
+		</a>
+		<h1 dir = "rtl">כמה בית הספר שלי גובה?</h1>
 
-		<div id = "supervisionFilter" class = "filter">
-			<label for = "select-supervision">סוג ביה"ס</label>
-			<select class = "filterSelect" id ="select-supervision"  name = "select-supervision">
-				<option value = 'הכל' selected>הכל</option>
-				<option value = 'ממלכתי'>ממלכתי</option>
-				<option value = 'ממלכתי דתי'>ממלכתי דתי</option>
-				<option value = 'חרדי'>חרדי</option>
-			</select>
-		</div>
+		<form id = "schoolForm">
+			<div id = "cityFilter" class = "filter" >
+				<label for = "select-city">יישוב</label>
+				<select class = "filterSelect" name="select-city" id = "select-city" placeholder=" יישוב">
+					<option value = 'הכל' selected>הכל</option>
+					<option value = 'אבו ג'ווייעד (שבט)'>אבו ג'ווייעד (שבט)</option>
+					<option value = 'אבו גוש'>אבו גוש</option>
+					<option value = 'אבו סנאן'>אבו סנאן</option>
+					<option value = 'אבו קרינאת (יישוב)'>אבו קרינאת (יישוב)</option>
+					<option value = 'אבו תלול'>אבו תלול</option>
+					<option value = 'אבטין'>אבטין</option>
+					<option value = 'אביחיל'>אביחיל</option>
+					<option value = 'אביטל'>אביטל</option>
+					<option value = 'אבן יהודה'>אבן יהודה</option>
+					<option value = 'אבן שמואל'>אבן שמואל</option>
+					<option value = 'אבני חפץ'>אבני חפץ</option>
+					<option value = 'אבנת'>אבנת</option>
+					<option value = 'אום אל-פחם'>אום אל-פחם</option>
+					<option value = 'אום בטין'>אום בטין</option>
+					<option value = 'אופקים'>אופקים</option>
+					<option value = 'אור הגנוז'>אור הגנוז</option>
+					<option value = 'אור יהודה'>אור יהודה</option>
+					<option value = 'אור עקיבא'>אור עקיבא</option>
+					<option value = 'אורנית'>אורנית</option>
+					<option value = 'אזור'>אזור</option>
+					<option value = 'אחוזת ברק'>אחוזת ברק</option>
+					<option value = 'אחיעזר'>אחיעזר</option>
+					<option value = 'איילת השחר'>איילת השחר</option>
+					<option value = 'אילון'>אילון</option>
+					<option value = 'אילת'>אילת</option>
+					<option value = 'איתמר'>איתמר</option>
+					<option value = 'איתנים'>איתנים</option>
+					<option value = 'אכסאל'>אכסאל</option>
+					<option value = 'אל סייד'>אל סייד</option>
+					<option value = 'אלומה'>אלומה</option>
+					<option value = 'אלון מורה'>אלון מורה</option>
+					<option value = 'אלון שבות'>אלון שבות</option>
+					<option value = 'אלוני הבשן'>אלוני הבשן</option>
+					<option value = 'אלוני יצחק'>אלוני יצחק</option>
+					<option value = 'אלונים'>אלונים</option>
+					<option value = 'אלי-עד'>אלי-עד</option>
+					<option value = 'אליכין'>אליכין</option>
+					<option value = 'אליפלט'>אליפלט</option>
+					<option value = 'אליקים'>אליקים</option>
+					<option value = 'אלישיב'>אלישיב</option>
+					<option value = 'אלעד'>אלעד</option>
+					<option value = 'אלפי מנשה'>אלפי מנשה</option>
+					<option value = 'אלקנה'>אלקנה</option>
+					<option value = 'אמונים'>אמונים</option>
+					<option value = 'אמציה'>אמציה</option>
+					<option value = 'אספר'>אספר</option>
+					<option value = 'אעבלין'>אעבלין</option>
+					<option value = 'אעצם (שבט)'>אעצם (שבט)</option>
+					<option value = 'אפיקים'>אפיקים</option>
+					<option value = 'אפק'>אפק</option>
+					<option value = 'אפרתה'>אפרתה</option>
+					<option value = 'אריאל'>אריאל</option>
+					<option value = 'אשבל'>אשבל</option>
+					<option value = 'אשדוד'>אשדוד</option>
+					<option value = 'אשדות יעקב (איחוד)'>אשדות יעקב (איחוד)</option>
+					<option value = 'אשל הנשיא'>אשל הנשיא</option>
+					<option value = 'אשקלון'>אשקלון</option>
+					<option value = 'באקה אל-גרביה'>באקה אל-גרביה</option>
+					<option value = 'באר גנים'>באר גנים</option>
+					<option value = 'באר טוביה'>באר טוביה</option>
+					<option value = 'באר יעקב'>באר יעקב</option>
+					<option value = 'באר שבע'>באר שבע</option>
+					<option value = 'בארותיים'>בארותיים</option>
+					<option value = 'בוסתן הגליל'>בוסתן הגליל</option>
+					<option value = 'בועיינה-נוג'ידאת'>בועיינה-נוג'ידאת</option>
+					<option value = 'בוקעאתא'>בוקעאתא</option>
+					<option value = 'בחן'>בחן</option>
+					<option value = 'ביר אל-מכסור'>ביר אל-מכסור</option>
+					<option value = 'ביר הדאג''>ביר הדאג'</option>
+					<option value = 'בית אל'>בית אל</option>
+					<option value = 'בית אלעזרי'>בית אלעזרי</option>
+					<option value = 'בית אריה'>בית אריה</option>
+					<option value = 'בית ברל'>בית ברל</option>
+					<option value = 'בית ג'ן'>בית ג'ן</option>
+					<option value = 'בית דגן'>בית דגן</option>
+					<option value = 'בית הגדי'>בית הגדי</option>
+					<option value = 'בית העמק'>בית העמק</option>
+					<option value = 'בית חורון'>בית חורון</option>
+					<option value = 'בית חלקיה'>בית חלקיה</option>
+					<option value = 'בית חשמונאי'>בית חשמונאי</option>
+					<option value = 'בית יהושע'>בית יהושע</option>
+					<option value = 'בית יצחק-שער חפר'>בית יצחק-שער חפר</option>
+					<option value = 'בית מאיר'>בית מאיר</option>
+					<option value = 'בית ספר מרחבים'>בית ספר מרחבים</option>
+					<option value = 'בית עובד'>בית עובד</option>
+					<option value = 'בית צבי'>בית צבי</option>
+					<option value = 'בית קמה'>בית קמה</option>
+					<option value = 'בית רבן'>בית רבן</option>
+					<option value = 'בית שאן'>בית שאן</option>
+					<option value = 'בית שמש'>בית שמש</option>
+					<option value = 'ביתר עילית'>ביתר עילית</option>
+					<option value = 'בן שמן (כפר נוער)'>בן שמן (כפר נוער)</option>
+					<option value = 'בני ברק'>בני ברק</option>
+					<option value = 'בני דרור'>בני דרור</option>
+					<option value = 'בני יהודה'>בני יהודה</option>
+					<option value = 'בני נצרים'>בני נצרים</option>
+					<option value = 'בני עטרות'>בני עטרות</option>
+					<option value = 'בני עי"ש'>בני עי"ש</option>
+					<option value = 'בני ציון'>בני ציון</option>
+					<option value = 'בנימינה-גבעת עדה'>בנימינה-גבעת עדה</option>
+					<option value = 'בסמ"ה'>בסמ"ה</option>
+					<option value = 'בסמת טבעון'>בסמת טבעון</option>
+					<option value = 'בענה'>בענה</option>
+					<option value = 'בצת'>בצת</option>
+					<option value = 'ברכה'>ברכה</option>
+					<option value = 'ברכיה'>ברכיה</option>
+					<option value = 'ברקאי'>ברקאי</option>
+					<option value = 'ברקן'>ברקן</option>
+					<option value = 'בת חפר'>בת חפר</option>
+					<option value = 'בת ים'>בת ים</option>
+					<option value = 'בת עין'>בת עין</option>
+					<option value = 'ג'דיידה-מכר'>ג'דיידה-מכר</option>
+					<option value = 'ג'ולס'>ג'ולס</option>
+					<option value = 'ג'לג'וליה'>ג'לג'וליה</option>
+					<option value = 'ג'סר א-זרקא'>ג'סר א-זרקא</option>
+					<option value = 'ג'ש (גוש חלב)'>ג'ש (גוש חלב)</option>
+					<option value = 'ג'ת'>ג'ת</option>
+					<option value = 'גאולים'>גאולים</option>
+					<option value = 'גבים'>גבים</option>
+					<option value = 'גבע בנימין'>גבע בנימין</option>
+					<option value = 'גבעות בר'>גבעות בר</option>
+					<option value = 'גבעת אבני'>גבעת אבני</option>
+					<option value = 'גבעת אלה'>גבעת אלה</option>
+					<option value = 'גבעת ברנר'>גבעת ברנר</option>
+					<option value = 'גבעת זאב'>גבעת זאב</option>
+					<option value = 'גבעת חיים (איחוד)'>גבעת חיים (איחוד)</option>
+					<option value = 'גבעת חיים (מאוחד)'>גבעת חיים (מאוחד)</option>
+					<option value = 'גבעת יערים'>גבעת יערים</option>
+					<option value = 'גבעת שמואל'>גבעת שמואל</option>
+					<option value = 'גבעתיים'>גבעתיים</option>
+					<option value = 'גדרה'>גדרה</option>
+					<option value = 'גורנות הגליל'>גורנות הגליל</option>
+					<option value = 'גילון'>גילון</option>
+					<option value = 'גילת'>גילת</option>
+					<option value = 'גינוסר'>גינוסר</option>
+					<option value = 'גיניגר'>גיניגר</option>
+					<option value = 'גן יבנה'>גן יבנה</option>
+					<option value = 'גן נר'>גן נר</option>
+					<option value = 'גן שמואל'>גן שמואל</option>
+					<option value = 'גני תקווה'>גני תקווה</option>
+					<option value = 'געש'>געש</option>
+					<option value = 'גשר הזיו'>גשר הזיו</option>
+					<option value = 'גת (קיבוץ)'>גת (קיבוץ)</option>
+					<option value = 'דאלית אל-כרמל'>דאלית אל-כרמל</option>
+					<option value = 'דבורה'>דבורה</option>
+					<option value = 'דבוריה'>דבוריה</option>
+					<option value = 'דגניה א''>דגניה א'</option>
+					<option value = 'דולב'>דולב</option>
+					<option value = 'דייר אל-אסד'>דייר אל-אסד</option>
+					<option value = 'דייר חנא'>דייר חנא</option>
+					<option value = 'דימונה'>דימונה</option>
+					<option value = 'דישון'>דישון</option>
+					<option value = 'דפנה'>דפנה</option>
+					<option value = 'דריג'את'>דריג'את</option>
+					<option value = 'הוד השרון'>הוד השרון</option>
+					<option value = 'הודיות'>הודיות</option>
+					<option value = 'הושעיה'>הושעיה</option>
+					<option value = 'הזורע'>הזורע</option>
+					<option value = 'הזורעים'>הזורעים</option>
+					<option value = 'הר אדר'>הר אדר</option>
+					<option value = 'הרדוף'>הרדוף</option>
+					<option value = 'הרצליה'>הרצליה</option>
+					<option value = 'זיתן'>זיתן</option>
+					<option value = 'זכרון יעקב'>זכרון יעקב</option>
+					<option value = 'זמר'>זמר</option>
+					<option value = 'זמרת'>זמרת</option>
+					<option value = 'זרזיר'>זרזיר</option>
+					<option value = 'חגי'>חגי</option>
+					<option value = 'חדרה'>חדרה</option>
+					<option value = 'חולון'>חולון</option>
+					<option value = 'חוסן'>חוסן</option>
+					<option value = 'חורה'>חורה</option>
+					<option value = 'חורפיש'>חורפיש</option>
+					<option value = 'חיננית'>חיננית</option>
+					<option value = 'חיפה'>חיפה</option>
+					<option value = 'חירות'>חירות</option>
+					<option value = 'חלמיש'>חלמיש</option>
+					<option value = 'חמאם'>חמאם</option>
+					<option value = 'חמד'>חמד</option>
+					<option value = 'חמדיה'>חמדיה</option>
+					<option value = 'חמרה'>חמרה</option>
+					<option value = 'חספין'>חספין</option>
+					<option value = 'חפץ חיים'>חפץ חיים</option>
+					<option value = 'חצור הגלילית'>חצור הגלילית</option>
+					<option value = 'חצרים'>חצרים</option>
+					<option value = 'חרב לאת'>חרב לאת</option>
+					<option value = 'חריש'>חריש</option>
+					<option value = 'חשמונאים'>חשמונאים</option>
+					<option value = 'טבריה'>טבריה</option>
+					<option value = 'טובא-זנגריה'>טובא-זנגריה</option>
+					<option value = 'טורעאן'>טורעאן</option>
+					<option value = 'טייבה'>טייבה</option>
+					<option value = 'טייבה (בעמק)'>טייבה (בעמק)</option>
+					<option value = 'טירה'>טירה</option>
+					<option value = 'טירת כרמל'>טירת כרמל</option>
+					<option value = 'טירת צבי'>טירת צבי</option>
+					<option value = 'טל שחר'>טל שחר</option>
+					<option value = 'טלמון'>טלמון</option>
+					<option value = 'טמרה'>טמרה</option>
+					<option value = 'טמרה (יזרעאל)'>טמרה (יזרעאל)</option>
+					<option value = 'יאנוח-ג'ת'>יאנוח-ג'ת</option>
+					<option value = 'יבול'>יבול</option>
+					<option value = 'יבנאל'>יבנאל</option>
+					<option value = 'יבנה'>יבנה</option>
+					<option value = 'יגור'>יגור</option>
+					<option value = 'יד בנימין'>יד בנימין</option>
+					<option value = 'יד מרדכי'>יד מרדכי</option>
+					<option value = 'יד רמב"ם'>יד רמב"ם</option>
+					<option value = 'יהוד-מונוסון'>יהוד-מונוסון</option>
+					<option value = 'יטבתה'>יטבתה</option>
+					<option value = 'יסוד המעלה'>יסוד המעלה</option>
+					<option value = 'יסודות'>יסודות</option>
+					<option value = 'יפיע'>יפיע</option>
+					<option value = 'יפעת'>יפעת</option>
+					<option value = 'יצהר'>יצהר</option>
+					<option value = 'יקיר'>יקיר</option>
+					<option value = 'יקנעם עילית'>יקנעם עילית</option>
+					<option value = 'יראון'>יראון</option>
+					<option value = 'ירוחם'>ירוחם</option>
+					<option value = 'ירושלים'>ירושלים</option>
+					<option value = 'ירכא'>ירכא</option>
+					<option value = 'כאבול'>כאבול</option>
+					<option value = 'כאוכב אבו אל-היג'א'>כאוכב אבו אל-היג'א</option>
+					<option value = 'כברי'>כברי</option>
+					<option value = 'כדורי'>כדורי</option>
+					<option value = 'כוכב השחר'>כוכב השחר</option>
+					<option value = 'כוכב יאיר'>כוכב יאיר</option>
+					<option value = 'כוכב יעקב'>כוכב יעקב</option>
+					<option value = 'כחלה'>כחלה</option>
+					<option value = 'כישור'>כישור</option>
+					<option value = 'כמאנה'>כמאנה</option>
+					<option value = 'כנות'>כנות</option>
+					<option value = 'כנרת (קבוצה)'>כנרת (קבוצה)</option>
+					<option value = 'כסיפה'>כסיפה</option>
+					<option value = 'כסרא-סמיע'>כסרא-סמיע</option>
+					<option value = 'כעביה-טבאש-חג'אג'רה'>כעביה-טבאש-חג'אג'רה</option>
+					<option value = 'כפר אדומים'>כפר אדומים</option>
+					<option value = 'כפר ביאליק'>כפר ביאליק</option>
+					<option value = 'כפר בלום'>כפר בלום</option>
+					<option value = 'כפר ברא'>כפר ברא</option>
+					<option value = 'כפר גדעון'>כפר גדעון</option>
+					<option value = 'כפר גלים'>כפר גלים</option>
+					<option value = 'כפר גלעדי'>כפר גלעדי</option>
+					<option value = 'כפר האורנים'>כפר האורנים</option>
+					<option value = 'כפר המכבי'>כפר המכבי</option>
+					<option value = 'כפר הנוער הדתי'>כפר הנוער הדתי</option>
+					<option value = 'כפר הרא"ה'>כפר הרא"ה</option>
+					<option value = 'כפר ויתקין'>כפר ויתקין</option>
+					<option value = 'כפר ורדים'>כפר ורדים</option>
+					<option value = 'כפר זוהרים'>כפר זוהרים</option>
+					<option value = 'כפר חב"ד'>כפר חב"ד</option>
+					<option value = 'כפר חסידים א''>כפר חסידים א'</option>
+					<option value = 'כפר יאסיף'>כפר יאסיף</option>
+					<option value = 'כפר יהושע'>כפר יהושע</option>
+					<option value = 'כפר יונה'>כפר יונה</option>
+					<option value = 'כפר יעבץ'>כפר יעבץ</option>
+					<option value = 'כפר כמא'>כפר כמא</option>
+					<option value = 'כפר כנא'>כפר כנא</option>
+					<option value = 'כפר מימון'>כפר מימון</option>
+					<option value = 'כפר מל"ל'>כפר מל"ל</option>
+					<option value = 'כפר מנדא'>כפר מנדא</option>
+					<option value = 'כפר מנחם'>כפר מנחם</option>
+					<option value = 'כפר מצר'>כפר מצר</option>
+					<option value = 'כפר סבא'>כפר סבא</option>
+					<option value = 'כפר סילבר'>כפר סילבר</option>
+					<option value = 'כפר סירקין'>כפר סירקין</option>
+					<option value = 'כפר עציון'>כפר עציון</option>
+					<option value = 'כפר פינס'>כפר פינס</option>
+					<option value = 'כפר קאסם'>כפר קאסם</option>
+					<option value = 'כפר קרע'>כפר קרע</option>
+					<option value = 'כפר שמריהו'>כפר שמריהו</option>
+					<option value = 'כפר תבור'>כפר תבור</option>
+					<option value = 'כפר תפוח'>כפר תפוח</option>
+					<option value = 'כרם מהר"ל'>כרם מהר"ל</option>
+					<option value = 'כרמיאל'>כרמיאל</option>
+					<option value = 'לביא'>לביא</option>
+					<option value = 'להבות חביבה'>להבות חביבה</option>
+					<option value = 'להבים'>להבים</option>
+					<option value = 'לוד'>לוד</option>
+					<option value = 'לכיש'>לכיש</option>
+					<option value = 'לפיד'>לפיד</option>
+					<option value = 'לקיה'>לקיה</option>
+					<option value = 'מאיר שפיה'>מאיר שפיה</option>
+					<option value = 'מבוא חורון'>מבוא חורון</option>
+					<option value = 'מבועים'>מבועים</option>
+					<option value = 'מבשרת ציון'>מבשרת ציון</option>
+					<option value = 'מג'ד אל-כרום'>מג'ד אל-כרום</option>
+					<option value = 'מג'דל שמס'>מג'דל שמס</option>
+					<option value = 'מגאר'>מגאר</option>
+					<option value = 'מגדל העמק'>מגדל העמק</option>
+					<option value = 'מגן'>מגן</option>
+					<option value = 'מדרשת בן גוריון'>מדרשת בן גוריון</option>
+					<option value = 'מדרשת רופין'>מדרשת רופין</option>
+					<option value = 'מודיעין עילית'>מודיעין עילית</option>
+					<option value = 'מודיעין-מכבים-רעות'>מודיעין-מכבים-רעות</option>
+					<option value = 'מולדה'>מולדה</option>
+					<option value = 'מוקייבלה'>מוקייבלה</option>
+					<option value = 'מורשת'>מורשת</option>
+					<option value = 'מזכרת בתיה'>מזכרת בתיה</option>
+					<option value = 'מזרע'>מזרע</option>
+					<option value = 'מזרעה'>מזרעה</option>
+					<option value = 'מחנה תל נוף'>מחנה תל נוף</option>
+					<option value = 'מחסיה'>מחסיה</option>
+					<option value = 'מטולה'>מטולה</option>
+					<option value = 'מייסר'>מייסר</option>
+					<option value = 'מירון'>מירון</option>
+					<option value = 'מיתר'>מיתר</option>
+					<option value = 'מכמורת'>מכמורת</option>
+					<option value = 'מלכישוע'>מלכישוע</option>
+					<option value = 'מנשית זבדה'>מנשית זבדה</option>
+					<option value = 'מסילות'>מסילות</option>
+					<option value = 'מסלול'>מסלול</option>
+					<option value = 'מסעדה'>מסעדה</option>
+					<option value = 'מעגלים'>מעגלים</option>
+					<option value = 'מעגן מיכאל'>מעגן מיכאל</option>
+					<option value = 'מעונה'>מעונה</option>
+					<option value = 'מעיליא'>מעיליא</option>
+					<option value = 'מעלה אדומים'>מעלה אדומים</option>
+					<option value = 'מעלה אפרים'>מעלה אפרים</option>
+					<option value = 'מעלה החמישה'>מעלה החמישה</option>
+					<option value = 'מעלה לבונה'>מעלה לבונה</option>
+					<option value = 'מעלה מכמש'>מעלה מכמש</option>
+					<option value = 'מעלה עירון'>מעלה עירון</option>
+					<option value = 'מעלה עמוס'>מעלה עמוס</option>
+					<option value = 'מעלות-תרשיחא'>מעלות-תרשיחא</option>
+					<option value = 'מצפה יריחו'>מצפה יריחו</option>
+					<option value = 'מצפה רמון'>מצפה רמון</option>
+					<option value = 'מקווה ישראל'>מקווה ישראל</option>
+					<option value = 'מרגליות'>מרגליות</option>
+					<option value = 'מרום גולן'>מרום גולן</option>
+					<option value = 'מרחביה (קיבוץ)'>מרחביה (קיבוץ)</option>
+					<option value = 'מרכז אזור מרום הגליל'>מרכז אזור מרום הגליל</option>
+					<option value = 'מרכז שוהם'>מרכז שוהם</option>
+					<option value = 'מרכז שפירא'>מרכז שפירא</option>
+					<option value = 'משאבי שדה'>משאבי שדה</option>
+					<option value = 'משהד'>משהד</option>
+					<option value = 'משואה'>משואה</option>
+					<option value = 'משמר השרון'>משמר השרון</option>
+					<option value = 'מתן'>מתן</option>
+					<option value = 'מתתיהו'>מתתיהו</option>
+					<option value = 'נאות מרדכי'>נאות מרדכי</option>
+					<option value = 'נאות סמדר'>נאות סמדר</option>
+					<option value = 'נאעורה'>נאעורה</option>
+					<option value = 'נהורה'>נהורה</option>
+					<option value = 'נהלל'>נהלל</option>
+					<option value = 'נהריה'>נהריה</option>
+					<option value = 'נוב'>נוב</option>
+					<option value = 'נוה'>נוה</option>
+					<option value = 'נווה איתן'>נווה איתן</option>
+					<option value = 'נווה זוהר'>נווה זוהר</option>
+					<option value = 'נווה ירק'>נווה ירק</option>
+					<option value = 'נווה שלום'>נווה שלום</option>
+					<option value = 'נוף איילון'>נוף איילון</option>
+					<option value = 'נופית'>נופית</option>
+					<option value = 'נוקדים'>נוקדים</option>
+					<option value = 'נחושה'>נחושה</option>
+					<option value = 'נחלים'>נחלים</option>
+					<option value = 'נחם'>נחם</option>
+					<option value = 'נחף'>נחף</option>
+					<option value = 'נטור'>נטור</option>
+					<option value = 'ניין'>ניין</option>
+					<option value = 'ניל"י'>ניל"י</option>
+					<option value = 'ניצן'>ניצן</option>
+					<option value = 'ניצנה (קהילת חינוך)'>ניצנה (קהילת חינוך)</option>
+					<option value = 'ניצנים'>ניצנים</option>
+					<option value = 'ניר יפה'>ניר יפה</option>
+					<option value = 'ניר עם'>ניר עם</option>
+					<option value = 'ניר עציון'>ניר עציון</option>
+					<option value = 'ניר עקיבא'>ניר עקיבא</option>
+					<option value = 'ניר צבי'>ניר צבי</option>
+					<option value = 'נס ציונה'>נס ציונה</option>
+					<option value = 'נעורים'>נעורים</option>
+					<option value = 'נעלה'>נעלה</option>
+					<option value = 'נעמן (מילואות)'>נעמן (מילואות)</option>
+					<option value = 'נען'>נען</option>
+					<option value = 'נצרת'>נצרת</option>
+					<option value = 'נצרת עילית'>נצרת עילית</option>
+					<option value = 'נשר'>נשר</option>
+					<option value = 'נתיבות'>נתיבות</option>
+					<option value = 'נתניה'>נתניה</option>
+					<option value = 'סאג'ור'>סאג'ור</option>
+					<option value = 'סאסא'>סאסא</option>
+					<option value = 'סביון'>סביון</option>
+					<option value = 'סולם'>סולם</option>
+					<option value = 'סוסיה'>סוסיה</option>
+					<option value = 'סח'נין'>סח'נין</option>
+					<option value = 'סלמה'>סלמה</option>
+					<option value = 'סנסנה'>סנסנה</option>
+					<option value = 'סעד'>סעד</option>
+					<option value = 'ספיר'>ספיר</option>
+					<option value = 'סתריה'>סתריה</option>
+					<option value = 'ע'ג'ר'>ע'ג'ר</option>
+					<option value = 'עברון'>עברון</option>
+					<option value = 'עוזייר'>עוזייר</option>
+					<option value = 'עומר'>עומר</option>
+					<option value = 'עופרה'>עופרה</option>
+					<option value = 'עוקבי (בנו עוקבה)'>עוקבי (בנו עוקבה)</option>
+					<option value = 'עטרת'>עטרת</option>
+					<option value = 'עיילבון'>עיילבון</option>
+					<option value = 'עיינות'>עיינות</option>
+					<option value = 'עילוט'>עילוט</option>
+					<option value = 'עין אל-אסד'>עין אל-אסד</option>
+					<option value = 'עין גדי'>עין גדי</option>
+					<option value = 'עין החורש'>עין החורש</option>
+					<option value = 'עין המפרץ'>עין המפרץ</option>
+					<option value = 'עין השופט'>עין השופט</option>
+					<option value = 'עין חרוד (איחוד)'>עין חרוד (איחוד)</option>
+					<option value = 'עין חרוד (מאוחד)'>עין חרוד (מאוחד)</option>
+					<option value = 'עין כרם-בי"ס חקלאי'>עין כרם-בי"ס חקלאי</option>
+					<option value = 'עין כרמל'>עין כרמל</option>
+					<option value = 'עין מאהל'>עין מאהל</option>
+					<option value = 'עין נקובא'>עין נקובא</option>
+					<option value = 'עין קנייא'>עין קנייא</option>
+					<option value = 'עין ראפה'>עין ראפה</option>
+					<option value = 'עין שמר'>עין שמר</option>
+					<option value = 'עינת'>עינת</option>
+					<option value = 'עכו'>עכו</option>
+					<option value = 'עלי'>עלי</option>
+					<option value = 'עלי זהב'>עלי זהב</option>
+					<option value = 'עמיקם'>עמיקם</option>
+					<option value = 'עמיר'>עמיר</option>
+					<option value = 'עמנואל'>עמנואל</option>
+					<option value = 'עספיא'>עספיא</option>
+					<option value = 'עפולה'>עפולה</option>
+					<option value = 'עצמון שגב'>עצמון שגב</option>
+					<option value = 'עראבה'>עראבה</option>
+					<option value = 'עראמשה'>עראמשה</option>
+					<option value = 'ערד'>ערד</option>
+					<option value = 'ערערה'>ערערה</option>
+					<option value = 'ערערה-בנגב'>ערערה-בנגב</option>
+					<option value = 'עשרת'>עשרת</option>
+					<option value = 'עתלית'>עתלית</option>
+					<option value = 'עתניאל'>עתניאל</option>
+					<option value = 'פדואל'>פדואל</option>
+					<option value = 'פוריידיס'>פוריידיס</option>
+					<option value = 'פני חבר'>פני חבר</option>
+					<option value = 'פסגות'>פסגות</option>
+					<option value = 'פסוטה'>פסוטה</option>
+					<option value = 'פקיעין (בוקייעה)'>פקיעין (בוקייעה)</option>
+					<option value = 'פרדס חנה-כרכור'>פרדס חנה-כרכור</option>
+					<option value = 'פרדסיה'>פרדסיה</option>
+					<option value = 'פרוד'>פרוד</option>
+					<option value = 'פתח תקווה'>פתח תקווה</option>
+					<option value = 'צביה'>צביה</option>
+					<option value = 'צוחר'>צוחר</option>
+					<option value = 'צור הדסה'>צור הדסה</option>
+					<option value = 'צור יצחק'>צור יצחק</option>
+					<option value = 'צור משה'>צור משה</option>
+					<option value = 'צלפון'>צלפון</option>
+					<option value = 'צנדלה'>צנדלה</option>
+					<option value = 'צפריה'>צפריה</option>
+					<option value = 'צפת'>צפת</option>
+					<option value = 'צרעה'>צרעה</option>
+					<option value = 'קבוצת יבנה'>קבוצת יבנה</option>
+					<option value = 'קדומים'>קדומים</option>
+					<option value = 'קדימה-צורן'>קדימה-צורן</option>
+					<option value = 'קדמה'>קדמה</option>
+					<option value = 'קדרון'>קדרון</option>
+					<option value = 'קודייראת א-צאנע(שבט)'>קודייראת א-צאנע(שבט)</option>
+					<option value = 'קוממיות'>קוממיות</option>
+					<option value = 'קיסריה'>קיסריה</option>
+					<option value = 'קליה'>קליה</option>
+					<option value = 'קלנסווה'>קלנסווה</option>
+					<option value = 'קציר'>קציר</option>
+					<option value = 'קצר א-סר'>קצר א-סר</option>
+					<option value = 'קצרין'>קצרין</option>
+					<option value = 'קרית אונו'>קרית אונו</option>
+					<option value = 'קרית ארבע'>קרית ארבע</option>
+					<option value = 'קרית אתא'>קרית אתא</option>
+					<option value = 'קרית ביאליק'>קרית ביאליק</option>
+					<option value = 'קרית גת'>קרית גת</option>
+					<option value = 'קרית טבעון'>קרית טבעון</option>
+					<option value = 'קרית ים'>קרית ים</option>
+					<option value = 'קרית יערים'>קרית יערים</option>
+					<option value = 'קרית יערים(מוסד)'>קרית יערים(מוסד)</option>
+					<option value = 'קרית מוצקין'>קרית מוצקין</option>
+					<option value = 'קרית מלאכי'>קרית מלאכי</option>
+					<option value = 'קרית עקרון'>קרית עקרון</option>
+					<option value = 'קרית שמונה'>קרית שמונה</option>
+					<option value = 'קרני שומרון'>קרני שומרון</option>
+					<option value = 'קשת'>קשת</option>
+					<option value = 'ראמה'>ראמה</option>
+					<option value = 'ראס עלי'>ראס עלי</option>
+					<option value = 'ראש העין'>ראש העין</option>
+					<option value = 'ראש פינה'>ראש פינה</option>
+					<option value = 'ראש צורים'>ראש צורים</option>
+					<option value = 'ראשון לציון'>ראשון לציון</option>
+					<option value = 'רבבה'>רבבה</option>
+					<option value = 'רגבה'>רגבה</option>
+					<option value = 'רהט'>רהט</option>
+					<option value = 'רומאנה'>רומאנה</option>
+					<option value = 'רומת הייב'>רומת הייב</option>
+					<option value = 'רחוב'>רחוב</option>
+					<option value = 'רחובות'>רחובות</option>
+					<option value = 'ריחאניה'>ריחאניה</option>
+					<option value = 'ריינה'>ריינה</option>
+					<option value = 'רכסים'>רכסים</option>
+					<option value = 'רמות'>רמות</option>
+					<option value = 'רמות השבים'>רמות השבים</option>
+					<option value = 'רמלה'>רמלה</option>
+					<option value = 'רמת גן'>רמת גן</option>
+					<option value = 'רמת דוד'>רמת דוד</option>
+					<option value = 'רמת הכובש'>רמת הכובש</option>
+					<option value = 'רמת השרון'>רמת השרון</option>
+					<option value = 'רמת ישי'>רמת ישי</option>
+					<option value = 'רמת מגשימים'>רמת מגשימים</option>
+					<option value = 'רעננה'>רעננה</option>
+					<option value = 'שבי שומרון'>שבי שומרון</option>
+					<option value = 'שבלי - אום אל-גנם'>שבלי - אום אל-גנם</option>
+					<option value = 'שגב-שלום'>שגב-שלום</option>
+					<option value = 'שדה אליהו'>שדה אליהו</option>
+					<option value = 'שדה יעקב'>שדה יעקב</option>
+					<option value = 'שדרות'>שדרות</option>
+					<option value = 'שובל'>שובל</option>
+					<option value = 'שוהם'>שוהם</option>
+					<option value = 'שומריה'>שומריה</option>
+					<option value = 'שייח' דנון'>שייח' דנון</option>
+					<option value = 'שילה'>שילה</option>
+					<option value = 'שילת'>שילת</option>
+					<option value = 'שכניה'>שכניה</option>
+					<option value = 'שלומי'>שלומי</option>
+					<option value = 'שמשית'>שמשית</option>
+					<option value = 'שעב'>שעב</option>
+					<option value = 'שעלבים'>שעלבים</option>
+					<option value = 'שערי תקווה'>שערי תקווה</option>
+					<option value = 'שפיים'>שפיים</option>
+					<option value = 'שפיר'>שפיר</option>
+					<option value = 'שפרעם'>שפרעם</option>
+					<option value = 'שקד'>שקד</option>
+					<option value = 'שריגים (לי-און)'>שריגים (לי-און)</option>
+					<option value = 'שריד'>שריד</option>
+					<option value = 'תירוש'>תירוש</option>
+					<option value = 'תל אביב - יפו'>תל אביב - יפו</option>
+					<option value = 'תל יצחק'>תל יצחק</option>
+					<option value = 'תל מונד'>תל מונד</option>
+					<option value = 'תל שבע'>תל שבע</option>
+					<option value = 'תלמים'>תלמים</option>
+					<option value = 'תנובות'>תנובות</option>
+					<option value = 'תפרח'>תפרח</option>
+					<option value = 'תקוע'>תקוע</option>
+					<option value = 'תראבין א-צאנע(ישוב)'>תראבין א-צאנע(ישוב)</option>
+				</select>
+			</div>
 
-		<div id = "schoolsFilter" class = "filter">
-			<div>
-				<label for = "select-school">שם ביה"ס</label>
-				<img src="loading.gif" id="loading-indicator" style="display: none" />
+			<div id = "supervisionFilter" class = "filter">
+				<label for = "select-supervision">סוג ביה"ס</label>
+				<select class = "filterSelect" id ="select-supervision"  name = "select-supervision">
+					<option value = 'הכל' selected>הכל</option>
+					<option value = 'ממלכתי'>ממלכתי</option>
+					<option value = 'ממלכתי דתי'>ממלכתי דתי</option>
+					<option value = 'חרדי'>חרדי</option>
+				</select>
 			</div>
-			<select id = "select-school" name = "select-school"></select>
-		</div>
-		<div id = "classFilter" class = "filter">
-			<label for = "select-class">כיתה</label>
-			<select id = "select-class" class = "filterSelect" name = "select-class">
-				<option value = "א">א</option>
-				<option value = "ב">ב</option>
-				<option value = "ג">ג</option>
-				<option value = "ד">ד</option>
-				<option value = "ה">ה</option>
-				<option value = "ו">ו</option>
-				<option value = "ז">ז</option>
-				<option value = "ח">ח</option>
-				<option value = "ט">ט</option>
-				<option value = "י">י</option>
-				<option value = "יא">יא</option>
-				<option value = "יב">יב</option>
-			</select>
-		</div>
-		<button type = "button" id = "submit" class = "btn btn-primary">כמה? אני  במתח!</button>
-		<div class="alert alert-danger" id = "errorMessage" role="alert"></div>
-	</form>
-	<div class="container-fluid" id = "payments">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<table id = "paymentsTable" class="table table-bordered" >
-					<thead>
-						<tr>
-							<th class = "paymentsHeader">
-								שם הסעיף
-							</th>
-							<th class = "paymentsHeader">
-								משתייך ל
-							</th>
-							<th class = "paymentsHeader">
-								כמה אתה משלם
-							</th>
-							<th class = "paymentsHeader">
-								הסכום המקסימלי לתשלום עפ"י משרד החינוך
-							</th>
-						</tr>
-					</thead>
-					<tbody id = "paymentsBody">
-					</tbody>
-				</table>
+
+			<div id = "schoolsFilter" class = "filter">
+				<div>
+					<label for = "select-school">שם ביה"ס</label>
+					<img src="loading.gif" id="loading-indicator" style="display: none" />
+				</div>
+				<select id = "select-school" name = "select-school"></select>
+			</div>
+			<div id = "classFilter" class = "filter">
+				<label for = "select-class">כיתה</label>
+				<select id = "select-class" class = "filterSelect" name = "select-class">
+					<option value = "א">א</option>
+					<option value = "ב">ב</option>
+					<option value = "ג">ג</option>
+					<option value = "ד">ד</option>
+					<option value = "ה">ה</option>
+					<option value = "ו">ו</option>
+					<option value = "ז">ז</option>
+					<option value = "ח">ח</option>
+					<option value = "ט">ט</option>
+					<option value = "י">י</option>
+					<option value = "יא">יא</option>
+					<option value = "יב">יב</option>
+				</select>
+			</div>
+			<button type = "button" id = "submit" class = "btn btn-primary">כמה? אני  במתח!</button>
+			<div class="alert alert-danger" id = "errorMessage" role="alert"></div>
+		</form>
+		<div class="container-fluid" id = "payments">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<table id = "paymentsTable" class="table table-bordered" >
+						<thead>
+							<tr>
+								<th class = "paymentsHeader">
+									שם הסעיף
+								</th>
+								<th class = "paymentsHeader">
+									משתייך ל
+								</th>
+								<th class = "paymentsHeader">
+									כמה אתה משלם
+								</th>
+								<th class = "paymentsHeader">
+									הסכום המקסימלי לתשלום עפ"י משרד החינוך
+								</th>
+							</tr>
+						</thead>
+						<tbody id = "paymentsBody">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
+	</div>
+	<div id = "explanationText">
+		<h2>מה המידע הזה אומר?</h2>
+		<p></p>
+		<h2>מאיפה המידע לקוח?</h2>
+		<p></p>
+		<h2>בית הספר שלי גובה יותר מהנחוץ. מה אני יכול לעשות בנוגע לזה?</h2>
+		<p></p>
+		<h2>מצאתי בעיה / אני רוצה לעזור</h2>
+		<p></p>
 	</div>
 	<script>
 		var BASE_API_URL = "http://127.0.0.1:5000/api/schools/";
@@ -727,20 +763,20 @@
 			// The api can return us 3 types of responses - either an actual price(a number), zero(which means the school can't charge for this field) or null(which means there isn't a limit to how much the school can charge for this field)
 			switch(maxPriceValue){
 				case 0:
-					return "בית הספר שלך לא רשאי לגבות תשלום על סעיף זה בכיתה זו או בכלל!";
+				return "בית הספר שלך לא רשאי לגבות תשלום על סעיף זה בכיתה זו או בכלל!";
 				case null:
-					return "אין";
+				return "אין";
 				default:
 					// The actual max price
 					return maxPriceValue;
+				}
 			}
-		}
-		function paymentClauseToRow(paymentClauseType, paymentClause){
-			console.log(paymentClause);
-			var row = $("<tr>");
-			var clauseTypeColumn = $("<td>").text(paymentClauseType);
-			var clauseNameColumn = $("<td>").text(paymentClause.name);
-			var clausePriceColumn = $("<td>").text(paymentClause.price);
+			function paymentClauseToRow(paymentClauseType, paymentClause){
+				console.log(paymentClause);
+				var row = $("<tr>");
+				var clauseTypeColumn = $("<td>").text(paymentClauseType);
+				var clauseNameColumn = $("<td>").text(paymentClause.name);
+				var clausePriceColumn = $("<td>").text(paymentClause.price);
 			// Not always there - can be null
 			var maxPrice = paymentClause.max_price;
 			var clauseMaxPriceColumn = $("<td>").text(getMaxPriceText(maxPrice));
@@ -776,6 +812,7 @@
 				getSchoolPayments(selectedSchoolId, function(payments){
 					errorMessageElem.hide();
 					$("#paymentsTable").show();
+					$("#explanationText").show();
 					console.log("Payments length:" + payments.length);
 					payments.forEach(function(payment){
 						var paymentClauses = payment.clauses;
@@ -798,6 +835,8 @@
 					console.dir(errorMessage);
 					errorMessageElem.text(errorMessage);
 					errorMessageElem.show();
+					$("#paymentsTable").hide();
+					$("#explanationText").hide();
 				});
 			}
 		});
