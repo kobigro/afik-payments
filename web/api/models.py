@@ -3,9 +3,11 @@ from app import db
 # Class ranges are inclusive here
 LEVELS_TO_CLASS_RANGES = {
     'חט"ב + עליונה': (7, 12),
-    'חט"ב בלבד': (7, 8),
+    'חט"ב בלבד': (7, 9),
+    # TODO: some elemtary schools are from first to eighth grade. find a way
+    # to detect that
     'יסודי בלבד': (1, 6),
-    'יסודי וחט"ב': (1, 8),
+    'יסודי וחט"ב': (1, 9),
     'יסודי ועליונה': (1, 12),
     'יסודי חט"ב ועליונה': (1, 12),
     'עליונה בלבד': (9, 12)
@@ -23,10 +25,18 @@ class School(db.Model):
     payments = db.relationship(
         'SchoolPayment', backref='school', lazy='dynamic')
 
+    def _get_class_range(self):
+        return LEVELS_TO_CLASS_RANGES[self.level]
+
     def has_class(self, class_id):
-        class_range = LEVELS_TO_CLASS_RANGES[self.level]
+        class_range = self._get_class_range()
         # range by default is exclusive, while our dict is inclusive, so +1
         return class_id in range(class_range[0], class_range[1] + 1)
+
+    def is_final_class(self, class_id):
+        class_range = self._get_class_range()
+        # The final class in the range.
+        return class_id == class_range[1]
 
     @property
     def is_religious(self):

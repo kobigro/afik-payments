@@ -5,17 +5,42 @@ from utils import get_class_id
 
 def megamot_max_price(school, class_id):
     is_charging_for_additional_religious_program = school.payments.filter_by(
-        clause='תוכנית לימודים נוספת תורנית', of_class = class_id).scalar() is not None
+        clause='תוכנית לימודים נוספת תורנית', of_class=class_id).scalar() is not None
     # As anywhere, 0 means can't charge while None means there is no charging
     # limit. in this case, megamot is in voluntary payments, so it has no
     # payment limit
     return 0.0 if is_charging_for_additional_religious_program else None
+
+MESIBAT_SIUM_MAX_PRICES = {
+    'חט"ב + עליונה': 200.0,
+    'יסודי ועליונה': 200.0,
+    'יסודי חט"ב ועליונה': 200.0,
+    'עליונה בלבד': 200.0,
+    'חט"ב בלבד': 125.0,
+    'יסודי וחט"ב': 125.0,
+    'יסודי בלבד': 75.0
+}
+
+
+def mesibat_sium_max_price(school, class_id):
+    # If the class is the final class of this school, for example 12th grade
+    # in high school, it and only it can charge for a "mesibat sium"
+    # according to hozer mankal
+    if school.level == 'יסודי בלבד' and class_id == get_class_id('ח'):
+        # A hack for elementary schools with an eighth grade. more details at
+        # the models.py TODO: fix without a hack.
+        return MESIBAT_SIUM_MAX_PRICES['יסודי וחט"ב']
+
+    print(school, class_id)
+    charge_amount = MESIBAT_SIUM_MAX_PRICES.get(school.level)
+    return charge_amount if charge_amount is not None else 0.0
 """
     The data structure describing all max prices, for
     payment types and payment clauses, dynamic and static clauses,etc.
     TODO: actually document this dict and the format according to which
     the school max prices are calculated(static, same_price_for_all,
-    class_ranges_max_prices) etc.
+    class_ranges_max_prices) etc. or, refactor into classes, 
+    since this solution is ugly.
 """
 
 PAYMENTS_MAX_PRICES = {
@@ -46,6 +71,13 @@ PAYMENTS_MAX_PRICES = {
                     ('ט',): 165.0,
                     ('י', 'יב'): 176.0
                 }
+            },
+            {
+                'name': 'מסיבת סיום',
+                'only_religious_schools': False,
+                'static': False,
+                'same_price_for_all': False,
+                'max_price_func': mesibat_sium_max_price
             },
             {
                 'name': 'מסיבות כיתתיות',
@@ -102,7 +134,35 @@ PAYMENTS_MAX_PRICES = {
                     ('ז', 'יא'): 150.0,
                     ('יב',): 0.0
                 }
-            }
+            },
+            {
+                'name': 'הפעלת המוסד בשעות אחר הצהריים',
+                'only_religious_schools': True,
+                'static': True,
+                'same_price_for_all': False,
+                'class_ranges_max_prices': {
+                    ('ה', 'ו'): 400.0,
+                    ('ז', 'יב'): 600.0
+                }
+            },
+            {
+                'name': 'סמינריון',
+                'only_religious_schools': True,
+                'static': True,
+                'same_price_for_all': False,
+                'class_ranges_max_prices': {
+                    ('ז', 'יב'): 400.0
+                }
+            },
+            {
+                'name': 'שבתות',
+                'only_religious_schools': True,
+                'static': True,
+                'same_price_for_all': False,
+                'class_ranges_max_prices': {
+                    ('ז', 'יב'): 680.0
+                }
+            }           
         ],
         # But can't write a max func because we can't refer to sum of
         # clauses(dict isn't self referential), since some of the clauses are
