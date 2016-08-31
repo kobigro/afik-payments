@@ -830,6 +830,8 @@
 						errorMessage = "כיתה זו לא קיימת בבית ספר זה.";
 					}else if(errorMessage == "school not found"){
 						errorMessage = "בית ספר זה אינו קיים";
+					}else if(errorMessage == "payments not found"){
+						errorMessage = "בית ספר זה אינו מאושר ע\"י משרד החינוך!";
 					}
 					console.dir(errorMessage);
 					errorMessageElem.text(errorMessage);

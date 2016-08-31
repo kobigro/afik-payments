@@ -13,6 +13,8 @@ def get_payments(school_id, class_name=None):
     class_id = get_class_id(class_name)
     if class_id is None or not school.has_class(class_id):
         raise NotFoundError("class not found")
+    if not school.is_approved:
+        raise NotFoundError("payments not found")
     return _get_payments(school, class_id)
 
 
