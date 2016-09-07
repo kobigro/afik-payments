@@ -165,13 +165,13 @@
 		                } else if (errorMessage == "school not found") {
 		                    errorMessage = "בית ספר זה אינו קיים";
 		                } else if (errorMessage == "payments not found") {
-		                    errorMessage = "בית ספר זה אינו מאושר ע\"י משרד החינוך!";
+		                    errorMessage = "חוזר התשלומים של המוסד לא אושר ע\"י הפיקוח. המוסד אינו רשאי לגבות תשלום.";
 		                }
 		                console.dir(errorMessage);
 		                errorMessageElem.text(errorMessage);
 		                errorMessageElem.show();
 		                $("#paymentsTable").hide();
-		                $("#explanationText").hide();
+		                $("#explanationText").show();
 		            });
 		    }
 		});
