@@ -58,9 +58,12 @@ def get_clauses_with_max(payment_type, clause_payments, school, class_id):
         if clause_price > 0:
             clause_max_price = max_payments.get_clause_max_price(
                 school, class_id, clause_max_dict) if clause_max_dict is not None else None
+            price_for_one = max_payments.get_price_for_one(
+                class_id, clause_max_dict)
             clauses_with_max.append(
                 dict(name=clause_payment.clause,
-                     price=clause_price, max_price=clause_max_price))
+                     price=clause_price, max_price=clause_max_price,
+                     price_for_one=price_for_one))
     return clauses_with_max
 
 

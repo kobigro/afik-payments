@@ -181,6 +181,16 @@ PAYMENTS_MAX_PRICES = {
                     ('א', 'ו'): 885.0,
                     ('ז', 'ט'): 1060.0,
                     ('י', 'יב'): 1150.0
+                },
+                # repesents price for a single 'item',
+                # in talan, price for one hour
+                # in shabbat & seminarion,
+                # price for one shabbat / seminarion, etc.
+
+                'price_for_one': {
+                    ('א', 'ו'): 177.0,
+                    ('ז', 'ט'): 212.0,
+                    ('י', 'יב'): 230.0
                 }
             },
             {
@@ -193,6 +203,11 @@ PAYMENTS_MAX_PRICES = {
                     ('ה', 'ו'): 1770.0,
                     ('ז', 'ט'): 2120.0,
                     ('י', 'יב'): 2300.0
+                },
+                'price_for_one': {
+                    ('ה', 'ו'): 177.0,
+                    ('ז', 'ט'): 212.0,
+                    ('י', 'יב'): 230.0
                 }
             },
             {
@@ -205,6 +220,11 @@ PAYMENTS_MAX_PRICES = {
                     ('ה', 'ו'): 1770.0,
                     ('ז', 'ט'): 2120.0,
                     ('י', 'יב'): 2300.0
+                },
+                'price_for_one': {
+                    ('א', 'ו'): 177.0,
+                    ('ז', 'ט'): 212.0,
+                    ('י', 'יב'): 230.0
                 }
             }
         ],
@@ -301,13 +321,26 @@ def _get_static_max_price(payment_type_or_clause, class_id):
     is_same_price_for_all = payment_type_or_clause['same_price_for_all']
     if is_same_price_for_all:
         return payment_type_or_clause['max_price']
-    return _get_class_max_price(
+    return _get_class_price(
         class_id, payment_type_or_clause['class_ranges_max_prices'])
 
+"""
+Some payment clauses have prices for a single hour,
+for example: price for a single talan hour, price for a single
+seminarion, etc. This function returns that price, similar to 
+_get_static_max_price.
+"""
 
-def _get_class_max_price(class_id, class_ranges_max_prices):
+
+def get_price_for_one(class_id, payment_clause):
+    if payment_clause is not None and 'price_for_one' in payment_clause:
+        return _get_class_price(
+            class_id, payment_clause['price_for_one'])
+
+
+def _get_class_price(class_id, class_ranges_prices):
     class_id_range = ()
-    for class_range, max_price in class_ranges_max_prices.items():
+    for class_range, price in class_ranges_prices.items():
         first_class_id = get_class_id(class_range[0])
         # Two types of class ranges - either from one class to another,
         # or a single class
@@ -318,5 +351,5 @@ def _get_class_max_price(class_id, class_ranges_max_prices):
         elif len(class_range) == 1:
             class_id_range = first_class_id, first_class_id + 1
         if class_id in range(*class_id_range):
-            return max_price
+            return price
     return 0.0
