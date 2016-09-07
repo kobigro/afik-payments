@@ -162,7 +162,7 @@ PAYMENTS_MAX_PRICES = {
                 'class_ranges_max_prices': {
                     ('ז', 'יב'): 680.0
                 }
-            }           
+            }
         ],
         # But can't write a max func because we can't refer to sum of
         # clauses(dict isn't self referential), since some of the clauses are
@@ -190,6 +190,18 @@ PAYMENTS_MAX_PRICES = {
                 'same_price_for_all': False,
                 'class_ranges_max_prices': {
                     ('א', 'ד'): 0.0,
+                    ('ה', 'ו'): 1770.0,
+                    ('ז', 'ט'): 2120.0,
+                    ('י', 'יב'): 2300.0
+                }
+            },
+            {
+                'name': 'תל"ן תורני חרדי',
+                'only_religious_schools': True,
+                'static': True,
+                'same_price_for_all': False,
+                'class_ranges_max_prices': {
+                    ('א', 'ד'): 885.0,
                     ('ה', 'ו'): 1770.0,
                     ('ז', 'ט'): 2120.0,
                     ('י', 'יב'): 2300.0
@@ -244,7 +256,12 @@ PAYMENTS_MAX_PRICES = {
 
 def get_payment_type_max_price(school, class_id, payment_type):
     payment_type_max_price = 0
-    payment_type_dict = PAYMENTS_MAX_PRICES[payment_type]
+    try:
+        payment_type_dict = PAYMENTS_MAX_PRICES[payment_type]
+    except KeyError:
+        # Can't charge for a type that doesn't exist..
+        return 0
+
     is_static = payment_type_dict['static']
     if is_static:
         return _get_static_max_price(payment_type_dict, class_id)
@@ -258,7 +275,11 @@ def get_payment_type_max_price(school, class_id, payment_type):
 
 def find_clauses_by_names(payment_type, clause_names):
     clauses = []
-    all_payment_type_clauses = PAYMENTS_MAX_PRICES[payment_type]['clauses']
+    try:
+        all_payment_type_clauses = PAYMENTS_MAX_PRICES[payment_type]['clauses']
+    except:
+        # No such payment type
+        return clauses
     for clause_name in clause_names:
         matching_clauses = (clause for clause in all_payment_type_clauses if clause[
                             "name"] == clause_name)

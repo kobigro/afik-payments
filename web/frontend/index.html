@@ -753,11 +753,11 @@
 		$('#select-supervision')[0].selectize.on('item_add',clearSchoolFilter);
 		$('#select-city')[0].selectize.on('item_add',clearSchoolFilter);
 
-		// TODO: seperate filter logic and submit logic to functions, modules, anything
 
 		function isNumber(n) {
 			return !isNaN(parseFloat(n)) && isFinite(n);
 		}
+
 		function getMaxPriceText(maxPriceValue){
 			// The api can return us 3 types of responses - either an actual price(a number), zero(which means the school can't charge for this field) or null(which means there isn't a limit to how much the school can charge for this field)
 			switch(maxPriceValue){
@@ -770,23 +770,27 @@
 					return maxPriceValue;
 				}
 			}
-			function paymentClauseToRow(paymentClauseType, paymentClause){
-				console.log(paymentClause);
-				var row = $("<tr>");
-				var clauseTypeColumn = $("<td>").text(paymentClauseType);
-				var clauseNameColumn = $("<td>").text(paymentClause.name);
-				var clausePriceColumn = $("<td>").text(paymentClause.price);
-			// Not always there - can be null
-			var maxPrice = paymentClause.max_price;
-			var clauseMaxPriceColumn = $("<td>").text(getMaxPriceText(maxPrice));
-			row.append(clauseNameColumn, clauseTypeColumn, clausePriceColumn, clauseMaxPriceColumn);
-			return row;
+
+		function paymentClauseToRow(paymentClauseType,paymentClause){
+		console.log(paymentClause);
+		var row = $("<tr>");
+		var clauseTypeColumn = $("<td>").text(paymentClauseType);
+		var clauseNameColumn = $("<td>").text(paymentClause.name);
+		var clausePriceColumn = $("<td>").text(paymentClause.price);
+		// Not always there - can be null
+		var maxPrice = paymentClause.max_price;
+		var clauseMaxPriceColumn = $("<td>").text(getMaxPriceText(maxPrice));
+		row.append(clauseNameColumn, clauseTypeColumn, clausePriceColumn, clauseMaxPriceColumn);
+		return row;
 		}
 		function createPaymentTypeSummary(payment){
+			if(payment.clauses.length === 0){
+				// No payments, so no summary row.
+				return;
+			}
 			var row = $("<tr>");
 			var nameColumn = $("<td>").text("סה\"\כ " + payment.type);
 			var price = payment.price, maxPrice = payment.max_price;
-			// TODO: remove ugly string concat with something better.
 			var priceSummaryText = "אתה משלם " + price + "₪" + " והמחיר המקסימלי הינו " + maxPrice + "₪. אתה משלם ";
 			var priceDifference = Math.abs(maxPrice - price);
 			if(price <= maxPrice){
