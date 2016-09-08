@@ -50,6 +50,17 @@ class School(db.Model):
         return "{}, {}[{}]".format(self.name, self.city, self.level)
 
 
+# For shabatot and seminarion, a custom type
+# is created instead of 'reshut'. this is made
+# because they are conceptually seperate
+# from other reshut payments, since they have a price
+# 'per one', like talan. unlike other reshut payments.
+# this is why a custom `type` property is created,
+# which creates this custom type
+SHABTOT_SEMINARION_TYPE = 'פעילות חברתית תורנית(סמינריונים ושבתות)'
+SHABATOT_SEMINARION_PAYMENT_CLAUSES = ('שבתות', 'סמינריון')
+
+
 class SchoolPayment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'))
@@ -57,5 +68,11 @@ class SchoolPayment(db.Model):
     # `class`
     of_class = db.Column('class', db.Integer)
     clause = db.Column(db.String(100))
-    type = db.Column(db.String(100))
+    _type = db.Column('type', db.String(100))
     price = db.Column(db.Float)
+
+    @property
+    def type(self):
+        if self.clause in SHABATOT_SEMINARION_PAYMENT_CLAUSES:
+            return SHABTOT_SEMINARION_TYPE
+        return self._type

@@ -28,12 +28,12 @@ def mesibat_sium_max_price(school, class_id):
     # according to hozer mankal
     if school.level == 'יסודי בלבד' and class_id == get_class_id('ח'):
         # A hack for elementary schools with an eighth grade. more details at
-        # the models.py TODO: fix without a hack.
+        # models.py TODO: fix without a hack.
         return MESIBAT_SIUM_MAX_PRICES['יסודי וחט"ב']
 
-    print(school, class_id)
     charge_amount = MESIBAT_SIUM_MAX_PRICES.get(school.level)
     return charge_amount if charge_amount is not None else 0.0
+
 """
     The data structure describing all max prices, for
     payment types and payment clauses, dynamic and static clauses,etc.
@@ -142,13 +142,22 @@ PAYMENTS_MAX_PRICES = {
                     ('ה', 'ו'): 400.0,
                     ('ז', 'יב'): 600.0
                 }
-            },
+            }
+        ],
+        'has_max_price': False
+    },
+    'פעילות חברתית תורנית(סמינריונים ושבתות)': {
+        'clauses':
+        [
             {
                 'name': 'סמינריון',
                 'only_religious_schools': True,
                 'static': True,
                 'same_price_for_all': False,
                 'class_ranges_max_prices': {
+                    ('ז', 'יב'): 800.0
+                },
+                'price_for_one': {
                     ('ז', 'יב'): 400.0
                 }
             },
@@ -159,6 +168,9 @@ PAYMENTS_MAX_PRICES = {
                 'same_price_for_all': False,
                 'class_ranges_max_prices': {
                     ('ז', 'יב'): 680.0
+                },
+                'price_for_one': {
+                    ('ז', 'יב'): 340.0
                 }
             }
         ],

@@ -75,19 +75,36 @@
 		    row.append(clauseNameColumn, clauseTypeColumn, clausePriceColumn, clauseMaxPriceColumn);
 		    return row;
 		}
-		function getTalanHours(talanClauses){
-			var talanHours = 0;
-			talanClauses.forEach(function(talanClause){
-				var price = talanClause.price,
-		        maxPrice = talanClause.max_price, priceForHour = talanClause.price_for_one;
-			    talanHours += Math.floor(price / priceForHour);
+		function getClausesItemCount(clauses){
+			/* 
+			"item" is one hour for talan,
+			and one shabbat/seminarion for shabbatot and seminarionim.
+			this is calculated by: price for all /  price for one item("price_for_one")
+			*/
+			var itemCount = 0;
+			clauses.forEach(function(clause){
+				var price = clause.price,
+		        maxPrice = clause.max_price, priceForOne = clause.price_for_one;
+			    itemCount += Math.floor(price / priceForOne);
 			});
-			return talanHours;
+			return itemCount;
 		}
-		function getTalanSummaryText(payment, row){
-		var talanHours = getTalanHours(payment.clauses);
-		var summaryText = 'את/ה משלמ/ת על ' + talanHours + ' שעות תל"ן';
-		return summaryText;
+
+		function getTalanSummaryText(payment){
+			var talanHours = getClausesItemCount(payment.clauses);
+			if(talanHours === 1){
+				return 'את/ה משלמ/ת על שעת תל"ן אחת';
+			}
+			var summaryText = 'את/ה משלמ/ת על ' + talanHours + ' שעות תל"ן';
+			return summaryText;
+		}
+		function getPeilutToranitSummaryText(payment){
+			var peiluyotCount = getClausesItemCount(payment.clauses);
+			if(peiluyotCount === 1){
+				return 'את/ה משלמ/ת על פעילות חברתית תורנית(סמינריונים ושבתות) אחת';
+			}
+			var summaryText = 'את/ה משלמ/ת על ' + peiluyotCount + ' פעילויות חברתיות תורניות(סמינריונים ושבתות)';
+			return summaryText;
 		}
 		function getPriceSummaryText(payment, row) {
 			var price = payment.price,
@@ -95,7 +112,9 @@
 		    var paymentType = payment.type;
 		    console.log(paymentType, TALAN_TYPE);
 		    if (paymentType === TALAN_TYPE) {
-		        return getTalanSummaryText(payment, row);
+		        return getTalanSummaryText(payment);
+		    }else if(paymentType === PEILUT_TORANIT_TYPE){
+		    	return getPeilutToranitSummaryText(payment);
 		    }
 		    var priceSummaryText =  "את/ה משלמ/ת " + price + "₪";
 		    var priceDifference = Math.abs(maxPrice - price);
