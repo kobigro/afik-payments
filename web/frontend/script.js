@@ -52,28 +52,26 @@
 		    return !isNaN(parseFloat(n)) && isFinite(n);
 		}
 
-		function getMaxPriceText(maxPriceValue) {
+		function getMaxPriceText(maxPriceValue, paidValue) {
 		    // The api can return us 3 types of responses - either an actual price(a number), zero(which means the school can't charge for this field) or null(which means there isn't a limit to how much the school can charge for this field)
-		    switch (maxPriceValue) {
-		        case 0:
-		            return "בית הספר שלך לא רשאי לגבות תשלום על סעיף זה בכיתה זו או בכלל!";
-		        case null:
-		            return "אין";
-		        default:
-		            // The actual max price
-		            return maxPriceValue;
+		    if(maxPriceValue === 0){
+		    	return "בית הספר שלך לא רשאי לגבות תשלום על סעיף זה בכיתה זו או בכלל!"
 		    }
+		    if(maxPriceValue > paidValue)
+		    	return maxPriceValue;
+		    else
+		    	return "-";
 		}
 
 		function paymentClauseToRow(paymentClauseType, paymentClause) {
-		    console.log(paymentClause);
 		    var row = $("<tr>");
-		    var clauseTypeColumn = $("<td>").text(paymentClauseType);
-		    var clauseNameColumn = $("<td>").text(paymentClause.name);
-		    var clausePriceColumn = $("<td>").text(paymentClause.price);
 		    // Not always there - can be null
 		    var maxPrice = paymentClause.max_price;
-		    var clauseMaxPriceColumn = $("<td>").text(getMaxPriceText(maxPrice));
+		    var price = paymentClause.price;
+		    var clauseTypeColumn = $("<td>").text(paymentClauseType);
+		    var clauseNameColumn = $("<td>").text(paymentClause.name);
+		    var clausePriceColumn = $("<td>").text(price);
+		    var clauseMaxPriceColumn = $("<td>").text(getMaxPriceText(maxPrice, price));
 		    row.append(clauseNameColumn, clauseTypeColumn, clausePriceColumn, clauseMaxPriceColumn);
 		    return row;
 		}
@@ -97,11 +95,8 @@
 		var summaryText = 'את/ה משלמ/ת על ' + talanHours.hoursPayingFor + ' שעות תל"ן.';
 		if(talanHours.hoursEligible > 0){
 			summaryText += 'את/ה זכאי/ת ל' + talanHours.hoursEligible + ' שעות תל"ן נוספות';	
-			roe.addClass("danger");
-		}else{
-			row.addClass("success");
+			row.addClass("danger");
 		}
-
 		return summaryText;
 		}
 		function getPriceSummaryText(payment, row) {
@@ -112,17 +107,11 @@
 		    if (paymentType === TALAN_TYPE) {
 		        return getTalanSummaryText(payment, row);
 		    }
-		    var priceSummaryText =  "אתה משלם " + price + "₪" + " והמחיר המקסימלי הינו " + maxPrice + "₪. אתה משלם ";
+		    var priceSummaryText =  "את/ה משלמ/ת " + price + "₪";
 		    var priceDifference = Math.abs(maxPrice - price);
-		    if (price <= maxPrice) {
-		        row.addClass("success");
-		        if (price < maxPrice)
-		            priceSummaryText += priceDifference + "₪ פחות!";
-		        else
-		            priceSummaryText += "בדיוק את המחיר המקסימלי."
-		    } else {
-		        priceSummaryText += priceDifference + "₪ יותר!";
+		    if (price > maxPrice) {
 		        row.addClass("danger");
+		        priceSummaryText += " והמחיר המקסימלי הינו " + maxPrice + "₪. את/ה משלמ/ת " + priceDifference +"₪ יותר!";
 		    }
 		    return priceSummaryText;
 		}
