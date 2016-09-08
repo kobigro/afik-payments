@@ -57,7 +57,7 @@
 		    if(maxPriceValue === 0){
 		    	return "בית הספר שלך לא רשאי לגבות תשלום על סעיף זה בכיתה זו או בכלל!"
 		    }
-		    if(maxPriceValue > paidValue)
+		    if(paidValue > maxPriceValue)
 		    	return maxPriceValue;
 		    else
 		    	return "-";

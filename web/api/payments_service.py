@@ -20,17 +20,18 @@ def get_payments(school_id, class_name=None):
 
 def _get_payments(school, class_id):
     query = school.payments.filter_by(of_class=class_id)
-    a = _group_by(query.all(), 'type')
+    payment_types = _group_by(query.all(), 'type')
     payments = []
-    for payment_type, payment_type_clauses in a.items():
+    for payment_type, payment_type_clauses in payment_types.items():
         payment_type_price = sum(
-            [clause.price for clause in payment_type_clauses])
+            clause.price for clause in payment_type_clauses)
+
         # only if charging for this payment type
         if payment_type_price > 0:
-            payment_type_max_price = max_payments.get_payment_type_max_price(
-                school, class_id, payment_type)
             clauses_with_max = get_clauses_with_max(payment_type, payment_type_clauses,
                                                     school, class_id)
+            payment_type_max_price = max_payments.get_payment_type_max_price(
+                class_id, payment_type, clauses_with_max)
             payment = {
                 "type": payment_type,
                 "price": payment_type_price,

@@ -54,9 +54,7 @@ PAYMENTS_MAX_PRICES = {
                 'max_price': 75.0
             }
         ],
-        'static': True,
-        'same_price_for_all': True,
-        'max_price': 75.0
+        'has_max_price': False
     },
     'רשות': {
         'clauses':
@@ -164,11 +162,7 @@ PAYMENTS_MAX_PRICES = {
                 }
             }
         ],
-        # But can't write a max func because we can't refer to sum of
-        # clauses(dict isn't self referential), since some of the clauses are
-        # dynamic.
-        'static': False,
-        'same_price_for_all': False
+        'has_max_price': False
     },
     'תוכנית לימודים נוספת': {
         'clauses': [
@@ -228,8 +222,7 @@ PAYMENTS_MAX_PRICES = {
                 }
             }
         ],
-        'static': False,
-        'same_price_for_all': False
+        'has_max_price': False,
     },
     'מרצון': {
         'clauses': [
@@ -251,6 +244,7 @@ PAYMENTS_MAX_PRICES = {
                 'max_price_func': megamot_max_price
             }
         ],
+        'has_max_price': True,
         'static': True,
         'same_price_for_all': False,
         'class_ranges_max_prices': {
@@ -261,36 +255,29 @@ PAYMENTS_MAX_PRICES = {
 }
 
 """ 
-    This function uses the max payments prices dict to calculate
-    the max payment for a payment type in a class in a certain school. 
-    school is also received as param because it is required for the
-    dynamic functions in the max payments prices dict(see above).
-    Why not just sum all this payment type clauses? 
-    because in some cases, a school can overcharge a certian clause 
-    but still be below the max price for the entire payment type.
-    We want to know and be aware of that case, so we can't consider
-    only a specific school's clauses. We need to know the max for
-    the entire payment type.
+    This function sums all clauses to get max price for the payment type.
+    For some payment types(meratzon), there is a max price
+    for the payment type itself but not for the clauses,
+    so we can't just sum all the clauses max prices and
+    output that as the max price. for these payment types,
+    there is a max price for the payment type just like
+    the payment clauses(static, same_price_for_all, etc).
 """
 
 
-def get_payment_type_max_price(school, class_id, payment_type):
+def get_payment_type_max_price(class_id, payment_type, payment_clauses):
     payment_type_max_price = 0
     try:
         payment_type_dict = PAYMENTS_MAX_PRICES[payment_type]
     except KeyError:
         # Can't charge for a type that doesn't exist..
         return 0
-
-    is_static = payment_type_dict['static']
-    if is_static:
+    has_max_price = payment_type_dict['has_max_price']
+    if has_max_price:
+        # For now, all payment types with max price are static
         return _get_static_max_price(payment_type_dict, class_id)
     else:
-        payment_type_clauses = payment_type_dict['clauses']
-        clauses_max_payments = [get_clause_max_price(school, class_id, clause)
-                                for clause in payment_type_clauses
-                                ]
-        return sum(clauses_max_payments)
+        return sum(clause['max_price'] for clause in payment_clauses)
 
 
 def find_clauses_by_names(payment_type, clause_names):
