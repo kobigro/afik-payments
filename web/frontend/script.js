@@ -76,27 +76,17 @@
 		    return row;
 		}
 		function getTalanHours(talanClauses){
-			var talanHours = {
-				hoursPayingFor: 0,
-				hoursEligible: 0
-			};
+			var talanHours = 0;
 			talanClauses.forEach(function(talanClause){
 				var price = talanClause.price,
 		        maxPrice = talanClause.max_price, priceForHour = talanClause.price_for_one;
-			    talanHours.hoursPayingFor += Math.floor(price / priceForHour);
-			    var priceDifference = price - maxPrice;
-			    if(priceDifference > 0)
-			    	talanHours.hoursEligible  += priceDifference / priceForHour;
+			    talanHours += Math.floor(price / priceForHour);
 			});
 			return talanHours;
 		}
 		function getTalanSummaryText(payment, row){
 		var talanHours = getTalanHours(payment.clauses);
-		var summaryText = 'את/ה משלמ/ת על ' + talanHours.hoursPayingFor + ' שעות תל"ן.';
-		if(talanHours.hoursEligible > 0){
-			summaryText += 'את/ה זכאי/ת ל' + talanHours.hoursEligible + ' שעות תל"ן נוספות';	
-			row.addClass("danger");
-		}
+		var summaryText = 'את/ה משלמ/ת על ' + talanHours + ' שעות תל"ן';
 		return summaryText;
 		}
 		function getPriceSummaryText(payment, row) {
