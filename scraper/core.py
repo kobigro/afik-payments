@@ -1,17 +1,18 @@
 from bs4 import BeautifulSoup, NavigableString
 import json
 import asyncio
+import itertools
+import datetime
 from utils import get_viewstates
 from session import AfikSession
 import cities
-import itertools
 
 # TODO: refactor to two modules - result pages scraper and schools scraper
 BASE_URL = "http://hinuch.education.gov.il/acthorim/"
 SEARCH_URL = "http://hinuch.education.gov.il/acthorim/IturMosad.aspx"
 
 
-SCHOOL_PAGE_COUNT = 951
+SCHOOL_PAGE_COUNT = 964
 # Pages 1-10 have viewstate A..etc. this needs to be saved due to the
 # async nature of the scraper. if page 11 is requested before page 2 is,
 # we can't update the viewstate globally,because page 2 would be requested
@@ -47,7 +48,7 @@ PAYMENT_TYPES = {
     "תוכנית לימודים נוספת": "תוכנית לימודים נוספת"
 }
 
-JSON_OUTPUT_PATH = "../data/schools.json"
+OUTPUT_PATH_TEMPLATE = "../data/schools-{}.json"
 
 
 def set_pages_viewstate_values(html, pagelist_index=-1):
@@ -58,22 +59,24 @@ def set_pages_viewstate_values(html, pagelist_index=-1):
 async def get_schools():
     await search_session.start()
     schools = []
-    pages, next_main_page_html = await get_subpages_in()
+    pages, next_main_page_html = await get_result_pages()
     last_page = False
     schools = []
+    page_number = 0
     while not last_page:
         for page in pages:
             soup = BeautifulSoup(page, "html.parser")
-            print("Get page {}".format(_get_page_number(soup)))
-            if _get_page_number(soup) == SCHOOL_PAGE_COUNT:
+            page_number = _get_page_number(soup)
+            print("Get page {}".format(page_number))
+            if page_number == SCHOOL_PAGE_COUNT:
                 last_page = True
             schools.extend(await get_schools_in_page(soup))
         if not last_page:
-            pages, next_main_page_html = await get_subpages_in(next_main_page_html)
-    with open(JSON_OUTPUT_PATH, "w") as json_file:
-        json.dump(schools, json_file)
+            pages, next_main_page_html = await get_result_pages(next_main_page_html)
 
-async def get_subpages_in(main_page_html=None):
+    dump_schools(schools)
+
+async def get_result_pages(main_page_html=None):
     # Returns all subpages and the html of the next main page
     tasks = []
     subpages = []
@@ -84,28 +87,65 @@ async def get_subpages_in(main_page_html=None):
         subpages = [main_page_html]
 
     soup = BeautifulSoup(main_page_html, "html.parser")
-    page_links = soup.find("tr", {'class': 'textNormal'}).find(
-        "td", recursive=False).find_all("a")
-    # First link is usually ... (go to previous pages), so we choose the second
-    # one, index 1.
-    pagelist_index = int(page_links[1].text) // 10
+    page_number = _get_page_number(soup)
+    page_links = _get_page_links(soup, page_number)
+    # Result pages are paginated with a page size of 10.
+    # We use the paglist index with the viewstate, as described above
+    pagelist_index = int(page_number) // 10
 
+    for page_event_target, is_main_page in page_links:
+        page_html_task = get_page_html(
+            pagelist_index, page_event_target, is_main_page)
+        tasks.append(page_html_task)
+
+    pages, next_main_page_html = await _fetch_pages(tasks)
+    # Subpages might already contain the next main page html due to the
+    # special case of the first main page, as described above.
+    subpages.extend(pages)
+    return subpages, next_main_page_html
+
+async def _fetch_pages(page_tasks):
+    # This function gathers the async tasks for fetching
+    # the pages. It returns the pages html,
+    # and the next main page html.
+    all_pages = await asyncio.gather(*page_tasks)
+    subpages = []
+    next_main_page = ""
+    for page, is_main in all_pages:
+        if is_main:
+            next_main_page = page
+        subpages.append(page)
+    return subpages, next_main_page
+
+
+def _get_page_links(parsed_page, page_number):
+    # Return a list of tuples, each tuple contain the link target and whether
+    # the links points to a main page.
+    page_links = parsed_page.find("tr", {'class': 'textNormal'}).find(
+        "td", recursive=False).find_all("a")
+    links = []
     for link in page_links:
         page_event_target = _link_to_eventtarget(link)
+        is_main = link.text == "..."
         # If not link to previous main-page(in that case, no need to download
-        # the previous main page)
-        if page_event_target != "grdMosdot:_ctl9:_ctl0":
-            is_main = link.text == "..."
-            tasks.append(get_page_html(
-                pagelist_index, page_event_target, is_main))
+        # the previous main page).
+        # Also, In the last results page, there are links to *previous* pages.
+        # which is why we check if the link points to a previous page, to prevent a
+        # "loop" bug.
+        links_to_previous_main_page = page_event_target == "grdMosdot:_ctl9:_ctl0"
+        if not links_to_previous_main_page and not _links_to_previous_page(link, page_number):
+            links.append((page_event_target, is_main))
+    return links
 
-    pages = await asyncio.gather(*tasks)
-    next_main_page_html = ""
-    for page, is_main in pages:
-        if is_main:
-            next_main_page_html = page
-        subpages.append(page)
-    return subpages, next_main_page_html
+
+def _links_to_previous_page(link, current_page_number):
+    # Check if a link found in the parsed page points to a previous page.
+    try:
+        link_page_number = int(link.text)
+        return link_page_number < current_page_number
+    except ValueError:
+        # This is a main page, we shouldn't care about a ValueError.
+        pass
 
 
 def _link_to_eventtarget(link):
@@ -250,6 +290,25 @@ def get_clause_payments(payment_columns, classes):
                 clause_name = column.text
                 payment_type = get_payment_type(column)
     return clause_name, class_payments
+
+
+def dump_schools(schools):
+    json_path = get_json_path()
+    with open(json_path, "w") as json_file:
+        json.dump(schools, json_file)
+
+
+def get_json_path():
+    today = datetime.date.today()
+    month = today.month
+    year = today.year
+    # Between january and july, schoolyear new year part
+    if 1 <= month <= 7:
+        # Payment data year is the year when the
+        # schoolyear started, which starts in september,
+        # i.e one year less from now
+        year -= 1
+    return OUTPUT_PATH_TEMPLATE.format(year)
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
